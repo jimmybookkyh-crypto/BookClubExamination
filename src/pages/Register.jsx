@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useNavigate, useOutletContext, Link } from "react-router";
 
-Login.route = {
+Register.route = {
   path:'/login', 
-  index: 10
+  index: 11
 };
 
-export default function Login() {
+export default function Register() {
   const formInitialState={ 
-    identifier:'', 
+    username: '', 
+    email:'',
     password: ''
+
   };
 
   const [formData, setFormData] = useState(formInitialState);
@@ -24,14 +26,14 @@ export default function Login() {
   async function sendForm(event) {
     event.preventDefault();
     setError('');
-    const response = await fetch('/api/auth/local', {
+    const response = await fetch('/api/auth/local/register', {
       method:'POST',
       headers:{'Content-Type':'application/json'}, 
       body:JSON.stringify(formData)
     });
     const data=await response.json();
     if (!response.ok){
-      setError(data.error?.message ||'Login failed');
+      setError(data.error?.message ||'Registration failed');
       return;
     }
     localStorage.user=JSON.stringify(data);
@@ -39,17 +41,20 @@ export default function Login() {
     navigate('/');
   }
   return<>
-  <h2>Log in</h2>
+  <h2>Register</h2>
   <form onSubmit={sendForm}>
-    <label> Username or email:
-      <input required name="identifier" type="text" value={formData.identifier} onChange={updateFormData} />
+    <label> Användarnamn:
+      <input required name="username" type="text" value={formData.username} onChange={updateFormData} />
+      </label>
+    <label> E-postaddress:
+      <input required name="email" type="email" value={formData.email} onChange={updateFormData} />
     </label>
-    <label> Password:
-      <input required name="password" type="password" value={formData.password} onChange={updateFormData} />
+    <label> Lösenord: <small>(minst 8 tecken)</small>
+        <input required minLenght={8}  name="password" type="password" value={formData.password} onChange={updateFormData} />
     </label>
-    <button type="submit"> Log in </button>
+    <button type="submit"> Skapa konto </button>
     {error && <p style={{color:'red'}}>{error}</p>}
   </form>
-  <p>Don't have an account? <Link to = "/register">Register here</Link></p>
+  <p>Don't have an account? <Link to = "/register">Logga in här</Link></p>
   </>;
 }
