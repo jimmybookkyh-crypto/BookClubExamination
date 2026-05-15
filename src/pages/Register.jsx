@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useOutletContext, Link } from "react-router";
 
 Register.route = {
-  path:'/login', 
+  path:'/register', 
   index: 11
 };
 
@@ -50,7 +50,7 @@ export default function Register() {
       <input required name="email" type="email" value={formData.email} onChange={updateFormData} />
     </label>
     <label> Lösenord: <small>(minst 8 tecken)</small>
-        <input required minLenght={8}  name="password" type="password" value={formData.password} onChange={updateFormData} />
+        <input required minlenght={8}  name="password" type="password" value={formData.password} onChange={updateFormData} />
     </label>
     <button type="submit"> Skapa konto </button>
     {error && <p style={{color:'red'}}>{error}</p>}
