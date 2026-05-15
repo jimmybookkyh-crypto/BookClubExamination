@@ -8,7 +8,6 @@ As a backend we use the CMS strapi (contained in the strapi folder)
 ## Teknikstack
 
 - Node.js
-- Express
 - SQLite (better-sqlite3)
 - Dotenv (.env)
 - UUIDv4
@@ -48,11 +47,18 @@ git clone [(https://github.com/jimmybookkyh-crypto/BookClubExamination.git)]
 # Installera beroenden
 npm install
 
+## Gitignore
 
+För projektinlämning är följande filer borttagna från vår .gitignore i root-mappen:
+*.db
+*.env
+
+i följande filer i Strapis .gitignore:
+.temp
 
 ```
 
-Servern startar på `http://localhost:3000`.
+Servern startar på `http://localhost:5001` för Strapi och 5173 för REACT .
 
 ## API-dokumentation
 
