@@ -1,11 +1,11 @@
 import routes from "../routes";
 import { NavLink } from "react-router";
 
-export default function Header({ user, setuser }) {
+export default function Header({ user, setUser }) {
   
   function logout() {
     delete localStorage.user;
-    setuser(null);
+    setUser(null);
   }
 
   return (
