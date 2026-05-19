@@ -38,9 +38,9 @@
       "target": "api::author.author",
       "inversedBy": "books"
     },
-    "genre": {
+    "genres": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::genre.genre",
       "inversedBy": "books"
     },
