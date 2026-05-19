@@ -3,9 +3,10 @@ import { Outlet } from "react-router";
 import Header from "./UI/header";
 
 export default function App() {
-  const [user, setUser] = useState(localStorage.user ?
-    JSON.parse(localStorage.user) : null);  
-  
+  const [user, setUser] = useState(
+    localStorage.user ? JSON.parse(localStorage.user) : null,
+  );
+
   return (
     <>
       <Header user={user} setUser={setUser} />
