@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import useFetch from "../utils/useFetch";
 import checkBookTitle from "../utils/checkBookTitle";
+import uploadImage from "../utils/uploadImage";
 
 CreateBook.route = {
   path: '/create-book'
@@ -22,6 +23,7 @@ export default function CreateBook() {
   const [formSent, setFormSent] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [imageFile, setImageFile] = useState(null);
   const [bookAuthors, bookGenres, loading] = useFetch(
     "/api/authors?pagination[pageSize]=1000&sort=firstName,lastName",
     "/api/genres?pagination[pageSize]=1000"
@@ -40,13 +42,22 @@ async function sendForm(event) {
 
   event.preventDefault();
   setError('');
-
+  
+  let imageId = null;
+    if (imageFile) {
+      try {
+        const uploaded = await uploadImage(imageFile);
+        imageId = uploaded.id;
+      } catch (err) {
+        setError(err.message);
+        return;
+      }
+    }
   // måste välja author
-if (!showAuthorInput && formData.author === "0") {
-  setError("Du måste välja eller skapa en författare.");
-  return;
-}
-
+  if (!showAuthorInput && formData.author === "0") {
+    setError("Du måste välja eller skapa en författare.");
+    return;
+  }
   // kontroll för ny author
   if ( showAuthorInput &&
     (
@@ -57,7 +68,6 @@ if (!showAuthorInput && formData.author === "0") {
     setError("Fyll i både förnamn och efternamn.");
     return;
   }
-
   // måste välja en genre
     if (
     formData.genre === "0" ||
@@ -68,17 +78,14 @@ if (!showAuthorInput && formData.author === "0") {
     return;
   }
   const titleExists = await checkBookTitle(formData.title);
-
   if (titleExists) {
     setError('En bok med den titeln finns redan.');
     return;
   }
 
   let authorId = formData.author;
-
   // skapa ny author
   if (showAuthorInput) {
-
     const authorResponse = await fetch('/api/authors', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -88,47 +95,47 @@ if (!showAuthorInput && formData.author === "0") {
           lastName: formData.newAuthorLastName
         }
       })
-
     });
     const authorData = await authorResponse.json();
-
     authorId = authorData.data.documentId;
   }
-
   // skapa ny book
-const response = await fetch('/api/books', {
-  method: 'POST',
-  headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify({
-    data: {
-      title: formData.title,
-      year: formData.year,
-      description: formData.description,
-      genres: formData.genre === '0' ? null: formData.genre,
-      author: authorId === '0' ? null: authorId
-    }
-  })
-});
-
+  const response = await fetch('/api/books', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      data: {
+        title: formData.title,
+        year: formData.year,
+        description: [
+          {
+            type: "paragraph",
+            children: [
+              {
+                type: "text",
+                text: formData.description
+              }
+            ]
+          }
+        ],
+        genres: formData.genre === "0" ? [] : [formData.genre],
+        author: authorId === '0' ? null : authorId,
+        image: imageId ? imageId : null
+      }
+    })
+  });
 const data = await response.json();
+console.log("STATUS:", response.status);
+console.log("DATA:", data);
 
-console.log(data);
-
-  setFormSent(true);
+setFormSent(true);
 }
 
 function setAuthor(event) {
-
   const isNew = event.target.value === "__new__";
-
   setShowAuthorInput(isNew);
-
-  setFormData({
-    ...formData,
-    author: isNew ? "" : event.target.value
-  });
+  setFormData({ ...formData, author: isNew ? "" : event.target.value });
 }
-
   if (formSent) {
     return <>
       <p> Boken {formData.title} har blivit tillagd.</p>
@@ -147,7 +154,7 @@ function setAuthor(event) {
       <form onSubmit={sendForm}>
         <label>
           Title:
-          <input required name="title" type="text" placeholder="titel" value={formData.title} onChange={updateFormData} />
+          <input required name="title" type="text" placeholder="Titel" value={formData.title} onChange={updateFormData} />
         </label>
         <label>
           Author:
@@ -192,7 +199,22 @@ function setAuthor(event) {
         </label>
         <label>
           Beskrivning:
-          <input required name="description" type="text" placeholder="Beskrivning" value={formData.description} onChange={updateFormData} />
+          <textarea
+            required
+            name="description"
+            type="text"
+            placeholder="Beskrivning"
+            value={formData.description}
+            onChange={updateFormData}
+          />
+        </label>
+        <label>
+              Image (optional):
+              <input 
+                type="file"
+                accept="image/*"
+                onChange={event => setImageFile(event.target.files[0] || null)}
+              />
         </label>
         <button type="submit">Lägg till bok</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}
