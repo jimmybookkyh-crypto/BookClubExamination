@@ -118,7 +118,7 @@ async function sendForm(event) {
             ]
           }
         ],
-        genres: formData.genre === "0" ? [] : [formData.genre],
+        genre: formData.genre === "0" ? [] : [formData.genre],
         author: authorId === '0' ? null : authorId,
         image: imageId ? imageId : null
       }
