@@ -476,7 +476,7 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Blocks;
-    genres: Schema.Attribute.Relation<'manyToMany', 'api::genre.genre'>;
+    genre: Schema.Attribute.Relation<'manyToOne', 'api::genre.genre'>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::book.book'> &
@@ -504,7 +504,7 @@ export interface ApiGenreGenre extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    books: Schema.Attribute.Relation<'manyToMany', 'api::book.book'>;
+    books: Schema.Attribute.Relation<'oneToMany', 'api::book.book'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

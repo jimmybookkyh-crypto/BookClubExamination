@@ -44,8 +44,8 @@ export default function CreateReview() {
 
   return (
     <>
-      <h2>Skriv din recension</h2>
       <BookCard books={books} />
+      <h2>Skriv din recension</h2>
       <form onSubmit={sendForm}>
         <label>
           Recension:
