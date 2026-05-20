@@ -1,5 +1,6 @@
 import routes from "../routes";
 import { NavLink } from "react-router";
+import SearchBar from "./SearchBar";
 
 export default function NavBar({ user, setUser }) {
   function logout() {
@@ -16,6 +17,9 @@ export default function NavBar({ user, setUser }) {
             {label}
           </NavLink>
         ))}
+
+      <SearchBar />
+
       <div className="auth">
         {user ? (
           <>
