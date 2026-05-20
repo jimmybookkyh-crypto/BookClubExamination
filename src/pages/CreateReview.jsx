@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router";
 import useFetch from "../utils/useFetch";
-import BookCard from "../components/BookCard";
+import GetOneBook from "../components/GetOneBook";
+
 
 CreateReview.route = {
-  path: "/create-review",
+  path: "/create-review/:documentId",
+  index: 8
 };
 
 export default function CreateReview() {
@@ -44,7 +46,7 @@ export default function CreateReview() {
 
   return (
     <>
-      <BookCard books={books} />
+        <GetOneBook />
       <h2>Skriv din recension</h2>
       <form onSubmit={sendForm}>
         <label>
@@ -74,7 +76,7 @@ export default function CreateReview() {
             <option>5</option>
           </select>
         </label>
-        <button type="submit">Skicka</button>
+        <button type="submit" onClick={() => navigate('/')}>Skicka</button>
       </form>
     </>
   );
