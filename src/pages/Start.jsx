@@ -1,3 +1,5 @@
+import BookCard from "../components/BookCard";
+
 Start.route = {
   path: "/",
   label: "Start",
@@ -10,6 +12,7 @@ export default function Start() {
   return (
     <>
       <h2>Welcome!</h2>
+      <BookCard />
     </>
   );
 }
