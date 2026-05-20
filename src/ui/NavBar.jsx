@@ -1,8 +1,10 @@
 import routes from "../routes";
 import { NavLink } from "react-router";
+import { useState } from "react";
 import SearchBar from "./SearchBar";
 
 export default function NavBar({ user, setUser }) {
+  const [search, setSearch] = useState("");
   function logout() {
     delete localStorage.user;
     setUser(null);
@@ -18,7 +20,7 @@ export default function NavBar({ user, setUser }) {
           </NavLink>
         ))}
 
-      <SearchBar />
+      <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
 
       <div className="auth">
         {user ? (
