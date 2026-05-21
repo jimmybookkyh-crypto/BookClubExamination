@@ -1,4 +1,4 @@
-import GetAllBooks from "../components/GetAllBooks";
+import BookCard from "../components/BookCard";
 
 Start.route = {
   path: "/",
@@ -12,7 +12,7 @@ export default function Start() {
   return (
     <>
       <h2>Welcome!</h2>
-      <GetAllBooks />
+      <BookCard />
     </>
   );
 }
