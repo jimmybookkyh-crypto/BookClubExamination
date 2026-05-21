@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router";
+import { useParams } from "react-router";
 import useFetch from "../utils/useFetch";
 import GetOneBook from "../components/GetOneBook";
 
-
 CreateReview.route = {
   path: "/create-review/:documentId",
-  index: 8
+  index: 8,
 };
 
 export default function CreateReview() {
   const { user } = useOutletContext();
+  const { documentId } = useParams();
   const formInitialState = { content: "", rating: "" };
 
   const [formData, setFormData] = useState(formInitialState);
@@ -26,40 +27,90 @@ export default function CreateReview() {
   }
 
   function updateFormData(event) {
-    const { content: name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value } = event.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    console.log(formData);
   }
 
   async function sendForm(event) {
     event.preventDefault();
-    await fetch("/api/reviews", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: formData }),
-    });
-    setFormSent(true);
+
+    try {
+      const currentBook = books.find((book) => book.documentId === documentId);
+
+      const response = await fetch("/api/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            content: formData.content,
+            rating: formData.rating,
+
+            book: documentId,
+
+            user: user.id,
+          },
+        }),
+      });
+
+      const result = await response.json();
+
+      console.log(result);
+
+      if (!response.ok) {
+        throw new Error(result.error?.message || "Något gick fel");
+      }
+
+      setFormSent(true);
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    }
   }
 
   if (formSent) {
-    return <p>Recension skickad!</p>;
+    return (
+      <>
+        <GetOneBook />
+        <br />
+        <h2>Recension skickad!</h2>
+        <br />
+        <div>
+          <h3>Din recension:</h3>
+
+          <p>{formData.content}</p>
+
+          <p>Betyg: {formData.rating}/5</p>
+        </div>
+      </>
+    );
   }
 
   return (
     <>
-        <GetOneBook />
+      <GetOneBook />
+      <br />
       <h2>Skriv din recension</h2>
       <form onSubmit={sendForm}>
+        <br />
         <label>
           Recension:
           <textarea
             required
             name="content"
-            type="text"
+            // type="text"
             placeholder="Skriv din recension här..."
             value={formData.content}
             onChange={updateFormData}
           ></textarea>
         </label>
+        <br />
         <label>
           Betyg:
           <select
@@ -75,8 +126,10 @@ export default function CreateReview() {
             <option>4</option>
             <option>5</option>
           </select>
+          <br />
+          <br />
         </label>
-        <button type="submit" onClick={() => navigate('/')}>Skicka</button>
+        <button type="submit">Skicka</button>
       </form>
     </>
   );
