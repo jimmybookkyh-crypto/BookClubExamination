@@ -7,8 +7,6 @@ export default function GetAllBooks() {
   const [books, loading] = useFetch("/api/books?populate=*");
   const navigate = useNavigate();
 
-  console.log(JSON.stringify(books, null, 2));
-
   if (loading) {
     return <p>Laddar böcker...</p>;
   }
@@ -29,7 +27,9 @@ export default function GetAllBooks() {
             </p>
             <p>{genre?.name}</p>
             <p>{description?.[0]?.children?.[0]?.text}</p>
-            <button onClick={() => navigate(`/create-review/${documentId}`)}>Läs mer</button>
+            <button onClick={() => navigate(`/create-review/${documentId}`)}>
+              Läs mer
+            </button>
           </div>
         );
       })}
