@@ -42,6 +42,11 @@ async function sendForm(event) {
 
   event.preventDefault();
   setError('');
+
+  if (!localStorage.user) {
+    setError('Du måste vara inloggad för att kunna lägga till en bok.');
+    return;
+  }
   
   let imageId = null;
     if (imageFile) {
@@ -124,9 +129,10 @@ async function sendForm(event) {
       }
     })
   });
-const data = await response.json();
-console.log("STATUS:", response.status);
-console.log("DATA:", data);
+if (!response.ok) {
+  setError('Kunde inte lägga till boken.');
+  return;
+}
 
 setFormSent(true);
 }
@@ -153,11 +159,11 @@ function setAuthor(event) {
       <h2>Lägg till en ny bok</h2>
       <form onSubmit={sendForm}>
         <label>
-          Title:
+          Titel:<br/>
           <input required name="title" type="text" placeholder="Titel" value={formData.title} onChange={updateFormData} />
-        </label>
+        </label><br/>
         <label>
-          Author:
+          Författare:<br/>
           <select name="author" value={formData.author} onChange={setAuthor}>
           <option value="0">Välj författare</option>
             {
@@ -181,9 +187,9 @@ function setAuthor(event) {
                 </label>
               </>)
           }
-        </label>
+        </label><br/>
         <label>
-          Genre:
+          Genre:<br/>
           <select name="genre" value={formData.genre} onChange={updateFormData}>
           <option value="0">Välj genre</option>
             {bookGenres.map(({ documentId, name }) =>
@@ -192,30 +198,30 @@ function setAuthor(event) {
               </option>
             )}
           </select>
-        </label>
+        </label><br/>
         <label>
-          Utgivningsår:
-          <input required name="year" type="number" placeholder="Utgivningsår" value={formData.year} onChange={updateFormData} />
+          Utgivningsår:<br/>
+          <input required name="year" type="number" placeholder="" value={formData.year} onChange={updateFormData} />
         </label>
-        <label>
-          Beskrivning:
+        <label><br/>
+          Beskrivning:<br/>
           <textarea
             required
             name="description"
             type="text"
-            placeholder="Beskrivning"
+            placeholder="Kort beskrivning"
             value={formData.description}
             onChange={updateFormData}
           />
         </label>
-        <label>
-              Image (optional):
+        <label><br/>
+              Omslagsbild (valfri):<br/>
               <input 
                 type="file"
                 accept="image/*"
                 onChange={event => setImageFile(event.target.files[0] || null)}
               />
-        </label>
+        </label><br/>
         <button type="submit">Lägg till bok</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
