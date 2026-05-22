@@ -73,7 +73,31 @@ export default function Profile() {
     });
     setSaved(true);
   }
+  async function deleteAccount() {
 
+    const confirmed = window.confirm(
+      'Är du säker på att du vill avsluta ditt konto? Det går inte att ångra.'
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    const response = await fetch('/api/users/' + user.user.id, {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + user.jwt
+      }
+    });
+
+    if (!response.ok) {
+      setError('Kunde inte ta bort kontot');
+      return;
+    }
+
+    logout();
+    navigate('/');
+  }
   return <>
     <h2>Konto för {user.user.username}</h2>
     <p>Redigera din profilinformation nedan.</p>
@@ -98,7 +122,10 @@ export default function Profile() {
 </label><br />
       <button type="submit">Spara ändringar</button><br/>
       <button onClick={() => navigate('/')}>
-        Avbryt</button><br/>
+        Avbryt</button><br />
+      <button type="button" onClick={deleteAccount} style={{ color: 'red' }}>
+        Avsluta konto
+      </button><br/>
       <button onClick={logout}>Logga ut</button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {saved && <p style={{ color: 'green' }}>Ändringar sparade.</p>}
