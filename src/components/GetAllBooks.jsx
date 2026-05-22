@@ -27,7 +27,7 @@ export default function GetAllBooks() {
             </p>
             <p>{genre?.name}</p>
             <p>{description?.[0]?.children?.[0]?.text}</p>
-            <button onClick={() => navigate(`/create-review/${documentId}`)}>
+            <button onClick={() => navigate(`/one-book/${documentId}`)}>
               Läs mer
             </button>
           </div>
