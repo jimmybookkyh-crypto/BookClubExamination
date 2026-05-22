@@ -88,7 +88,7 @@ async function sendForm(event) {
   if (showAuthorInput) {
     const authorResponse = await fetch('/api/authors', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json', Authorization: `Bearer ${JSON.parse(localStorage.user).jwt}`},
       body: JSON.stringify({
         data: {
           firstName: formData.newAuthorFirstName,
@@ -102,7 +102,7 @@ async function sendForm(event) {
   // skapa ny book
   const response = await fetch('/api/books', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: {'Content-Type': 'application/json', Authorization: `Bearer ${JSON.parse(localStorage.user).jwt}`},
     body: JSON.stringify({
       data: {
         title: formData.title,
