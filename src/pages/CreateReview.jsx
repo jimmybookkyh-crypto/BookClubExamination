@@ -3,6 +3,7 @@ import { useNavigate, useOutletContext } from "react-router";
 import { useParams } from "react-router";
 import useFetch from "../utils/useFetch";
 import GetOneBook from "../components/GetOneBook";
+import GetAllReviews from "../components/GetAllReviews";
 
 CreateReview.route = {
   path: "/create-review/:documentId",
@@ -46,6 +47,7 @@ export default function CreateReview() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.user).jwt}`,
         },
         body: JSON.stringify({
           data: {
@@ -53,8 +55,6 @@ export default function CreateReview() {
             rating: formData.rating,
 
             book: documentId,
-
-            user: user.id,
           },
         }),
       });
@@ -87,6 +87,7 @@ export default function CreateReview() {
           <p>{formData.content}</p>
 
           <p>Betyg: {formData.rating}/5</p>
+          <GetAllReviews />
         </div>
       </>
     );
