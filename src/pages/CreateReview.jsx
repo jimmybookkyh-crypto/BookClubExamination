@@ -2,13 +2,11 @@ import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router";
 import { useParams } from "react-router";
 import useFetch from "../utils/useFetch";
-import GetOneBook from "../components/GetOneBook";
 import GetAllReviews from "../components/GetAllReviews";
 
 CreateReview.route = {
-  path: "/create-review/:documentId",
-  index: 8,
-};
+  path: "create-review"
+}
 
 export default function CreateReview() {
   const { user } = useOutletContext();
@@ -77,7 +75,6 @@ export default function CreateReview() {
   if (formSent) {
     return (
       <>
-        <GetOneBook />
         <br />
         <h2>Recension skickad!</h2>
         <br />
@@ -95,7 +92,6 @@ export default function CreateReview() {
 
   return (
     <>
-      <GetOneBook />
       <br />
       <h2>Skriv din recension</h2>
       <form onSubmit={sendForm}>
