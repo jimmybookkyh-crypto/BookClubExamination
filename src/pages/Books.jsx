@@ -9,8 +9,7 @@ export default function Books() {
   );
 }
 
-export const route = {
+Books.route = {
   path: "/books",
-  label: "Böcker",
-  index: 2
+  index: 2,
 };

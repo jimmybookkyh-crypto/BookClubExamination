@@ -1,29 +1,24 @@
 import routes from "../routes";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
+import BookDropdown from "./BookDropdown";
 
 export default function NavBar({ user, setUser }) {
   const [search, setSearch] = useState("");
-
   const navigate = useNavigate();
-
   function logout() {
     delete localStorage.user;
     setUser(null);
   }
-
   /* när söket skickas */
   function handleSearchSubmit(event) {
     event.preventDefault();
-
     /* om sökrutan är tom - gör inget */
     if (!search.trim()) return;
-
     /* skicka användaren till search-sidan */
     navigate(`/search?query=${search}`);
   }
-
   return (
     <nav>
       {routes
@@ -33,10 +28,7 @@ export default function NavBar({ user, setUser }) {
             {label}
           </NavLink>
         ))}
-      <div className="dropdown">
-        <button>Böcker ▾</button>
-      </div>
-
+      <BookDropdown user={user} />
       <form onSubmit={handleSearchSubmit}>
         <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
       </form>
@@ -54,7 +46,7 @@ export default function NavBar({ user, setUser }) {
           <>
             <NavLink to="/login">Logga in</NavLink>
             &nbsp;|&nbsp;
-            <NavLink to="/register">Skapa konto</NavLink>{" "}
+            <NavLink to="/register">Skapa konto</NavLink>
           </>
         )}
       </div>
