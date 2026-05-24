@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router";
 import { useParams } from "react-router";
 import useFetch from "../utils/useFetch";
-import GetAllReviews from "../components/GetAllReviews";
+import GetAllReviews from "./GetAllReviews";
 
-CreateReview.route = {
-  path: "create-review"
-}
+// CreateReview.route = {
+//   path: "create-review",
+// };
+
+const STRAPI_URL = "http://localhost:5001";
 
 export default function CreateReview() {
   const { user } = useOutletContext();
@@ -18,12 +20,12 @@ export default function CreateReview() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const [books, reviews, loading] = useFetch("/api/books", "/api/reviews");
+  // const [books, reviews, loading] = useFetch("/api/books", "/api/reviews");
   const [showReviews, setShowReviews] = useState(false);
 
-  if (loading) {
-    return;
-  }
+  // if (loading) {
+  //   return <p>Laddar formulär...</p>;
+  // }
 
   function updateFormData(event) {
     const { name, value } = event.target;
@@ -39,7 +41,7 @@ export default function CreateReview() {
     event.preventDefault();
 
     try {
-      const currentBook = books.find((book) => book.documentId === documentId);
+      // const currentBook = books.find((book) => book.documentId === documentId);
 
       const response = await fetch("/api/reviews", {
         method: "POST",
@@ -50,9 +52,10 @@ export default function CreateReview() {
         body: JSON.stringify({
           data: {
             content: formData.content,
-            rating: formData.rating,
+            rating: Number(formData.rating),
 
             book: documentId,
+            user: user.id,
           },
         }),
       });
@@ -80,11 +83,11 @@ export default function CreateReview() {
         <br />
         <div>
           <h3>Din recension:</h3>
+          <p>Skriven av: {formData.users_permission_user}</p>
 
-          <p>{formData.content}</p>
+          <p>Recension: {formData.content}</p>
 
           <p>Betyg: {formData.rating}/5</p>
-          <GetAllReviews />
         </div>
       </>
     );

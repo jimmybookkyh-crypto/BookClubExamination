@@ -23,10 +23,19 @@ export default function GetAllBooks() {
             {fullImageUrl && <img src={fullImageUrl} alt={title} />}
             <h3>{title}</h3>
             <p>
+              {" "}
+              <h4>Författare: </h4>
               {author?.firstName} {author?.lastName}
             </p>
-            <p>{genre?.name}</p>
-            <p>{description?.[0]?.children?.[0]?.text}</p>
+            <p>
+              <h4>Kategori: </h4>
+              {genre?.name}
+            </p>
+            <p>
+              <h4>Kort beskrivning: </h4>
+              {description?.[0]?.children?.[0]?.text}
+            </p>
+            <br />
             <button onClick={() => navigate(`/one-book/${documentId}`)}>
               Läs mer
             </button>
