@@ -16,13 +16,15 @@ export default function Start() {
   const search = searchParams.get("query") || "";
   return (
     <>
-      <section className="hero">
-        <img src={heroImage} alt="Books" />
-        <div className="hero-overlay">
-          <h2>Welcome!</h2>
-          <p>Discover, review and share your favorite books</p>
-        </div>
-      </section>
+      {!search && (
+        <section className="hero">
+          <img src={heroImage} alt="Books" />
+          <div className="hero-overlay">
+            <h2>Welcome!</h2>
+            <p>Discover, review and share your favorite books</p>
+          </div>
+        </section>
+      )}
       <GetAllBooks search={search} />
     </>
   );
