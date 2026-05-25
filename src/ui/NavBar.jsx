@@ -40,6 +40,7 @@ export default function NavBar({ user, setUser }) {
       <form onSubmit={handleSearchSubmit}>
         <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
       </form>
+
       <div className="auth">
         {user ? (
           <>

@@ -23,6 +23,10 @@ export default function GetAllBooks({ search }) {
     return <p>Laddar böcker...</p>;
   }
 
+  if (!loading && books.length === 0) {
+    return <p>Tyvärr hittade vi inga böcker för din sökning. Försök igen 📚</p>;
+  }
+
   return (
     <section className="books">
       {books.map(({ documentId, image, title, author, genre, description }) => {
