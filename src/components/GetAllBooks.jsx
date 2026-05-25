@@ -6,8 +6,11 @@ const STRAPI_URL = "http://localhost:5001";
 
 export default function GetAllBooks({ search }) {
   const url = search?.trim()
-    ? `/api/books?filters[title][$containsi]=${search}&populate=*`
+    ? `/api/books/search/${search}`
     : "/api/books?populate=*";
+
+  console.log("SEARCH:", search);
+  console.log("URL:", url);
 
   const [books, loading, update] = useFetch(url);
   const navigate = useNavigate();
@@ -18,6 +21,10 @@ export default function GetAllBooks({ search }) {
 
   if (loading) {
     return <p>Laddar böcker...</p>;
+  }
+
+  if (!loading && books.length === 0) {
+    return <p>Tyvärr hittade vi inga böcker för din sökning. Försök igen 📚</p>;
   }
 
   return (

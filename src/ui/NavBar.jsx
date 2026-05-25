@@ -29,7 +29,7 @@ export default function NavBar({ user, setUser }) {
       {routes
         .filter((x) => x.label)
         .map(({ path, label }) => (
-          <NavLink to={path} key={path}>
+          <NavLink to={path} key={path} onClick={() => setSearch("")}>
             {label}
           </NavLink>
         ))}
@@ -40,6 +40,7 @@ export default function NavBar({ user, setUser }) {
       <form onSubmit={handleSearchSubmit}>
         <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
       </form>
+
       <div className="auth">
         {user ? (
           <>
