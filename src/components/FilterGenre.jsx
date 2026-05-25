@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router";
 
-export default function FilterBooksByTitle() {
+export default function FilterGenre() {
 
   const [books, setBooks] = useState([]);
   const [selectedLetter, setSelectedLetter] = useState("");
@@ -22,13 +21,13 @@ export default function FilterBooksByTitle() {
 
   }, []);
 
-  // filtrera efter bokstav
+  // filtrera genre
   const filteredBooks = books.filter((book) => {
 
-    if (!selectedLetter) return true;
+    if (!selectedLetter) return false;
 
-    return book.title
-      .toUpperCase()
+    return book.attributes.genre
+      ?.toUpperCase()
       .startsWith(selectedLetter);
 
   });
@@ -53,16 +52,18 @@ export default function FilterBooksByTitle() {
 
       </div>
 
-      <br />
-
-      {/* böcker */}
+      {/* resultat */}
       {filteredBooks.map((book) => (
 
         <div key={book.id}>
 
-          <NavLink to={`/books/${book.documentId}`}>
-            {book.title}
-          </NavLink>
+          <h3>
+            {book.attributes.genre}
+          </h3>
+
+          <p>
+            {book.attributes.title}
+          </p>
 
         </div>
 

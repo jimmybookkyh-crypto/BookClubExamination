@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import { useState } from "react";
 
 export default function BookDropdown({ user }) {
@@ -6,6 +6,7 @@ export default function BookDropdown({ user }) {
   const [open, setOpen] = useState(false);
 
   return (
+
     <div className="dropdown">
 
       <button
@@ -19,18 +20,10 @@ export default function BookDropdown({ user }) {
 
         <div className="dropdown-content">
 
-          <NavLink to="/books">
-            Alla böcker
-          </NavLink>
-
-          <NavLink to="/filter-by-title">
-            Filtrera efter titel
-          </NavLink>
-
           {user ? (
 
             <NavLink to="/create-book">
-              Skapa bok
+              Lägg till bok
             </NavLink>
 
           ) : (
@@ -41,10 +34,23 @@ export default function BookDropdown({ user }) {
 
           )}
 
+          <NavLink to="/filter-genre">
+            Filtrera efter genre
+          </NavLink>
+
+          <NavLink to="/filter-rating">
+            Filtrera efter recension
+          </NavLink>
+
+          <NavLink to="/filter-year">
+            Filtrera efter utgivningsår
+          </NavLink>
+
         </div>
 
       )}
 
     </div>
+
   );
 }

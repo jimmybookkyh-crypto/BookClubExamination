@@ -181,3 +181,22 @@ nav a {
 .dropdown-content a:hover {
   background-color: #f1f1f1;
 }
+/* Alphabet list */
+.alphabet-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.alphabet-list button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.alphabet-list button:hover {
+  background: #eee;
+}

@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router";
 
-export default function FilterBooksByTitle() {
+export default function FilterYear() {
 
   const [books, setBooks] = useState([]);
   const [selectedLetter, setSelectedLetter] = useState("");
 
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ".split("");
+  const years = [
+    "2024",
+    "2023",
+    "2022",
+    "2021",
+    "2020",
+    "2019",
+    "2018",
+  ];
 
   useEffect(() => {
 
@@ -22,13 +29,11 @@ export default function FilterBooksByTitle() {
 
   }, []);
 
-  // filtrera efter bokstav
   const filteredBooks = books.filter((book) => {
 
-    if (!selectedLetter) return true;
+    if (!selectedLetter) return false;
 
-    return book.title
-      .toUpperCase()
+    return String(book.attributes.year)
       .startsWith(selectedLetter);
 
   });
@@ -37,32 +42,32 @@ export default function FilterBooksByTitle() {
 
     <div>
 
-      {/* alfabet */}
       <div className="alphabet-list">
 
-        {alphabet.map((letter) => (
+        {years.map((year) => (
 
           <button
-            key={letter}
-            onClick={() => setSelectedLetter(letter)}
+            key={year}
+            onClick={() => setSelectedLetter(year)}
           >
-            {letter}
+            {year}
           </button>
 
         ))}
 
       </div>
 
-      <br />
-
-      {/* böcker */}
       {filteredBooks.map((book) => (
 
         <div key={book.id}>
 
-          <NavLink to={`/books/${book.documentId}`}>
-            {book.title}
-          </NavLink>
+          <h3>
+            {book.attributes.year}
+          </h3>
+
+          <p>
+            {book.attributes.title}
+          </p>
 
         </div>
 
