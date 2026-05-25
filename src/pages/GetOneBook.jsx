@@ -47,7 +47,7 @@ export default function GetOneBook({ user, setUser }) {
       <h2>Resencioner</h2>
       <GetAllReviews />
       <br />
-      <CreateReview />
+      <CreateReview user={user} setUser={setUser} />
     </>
   );
 }
