@@ -1,9 +1,18 @@
 'use strict';
 
-/**
- * review controller
- */
+const { createCoreController } = require("@strapi/strapi").factories;
 
-const { createCoreController } = require('@strapi/strapi').factories;
+module.exports = createCoreController("api::review.review", ({ strapi }) => ({
+  async create(ctx) {
+    const userId = ctx.state.user.id;
+    
+    const response = await strapi.entityService.create("api::review.review", {
+      data: {
+        ...ctx.request.body.data,
+        user: userId,
+      },
+    });
 
-module.exports = createCoreController('api::review.review');
+    return { data: response };
+  },
+}));

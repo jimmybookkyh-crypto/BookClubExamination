@@ -11,7 +11,7 @@ import GetAllReviews from "./GetAllReviews";
 const STRAPI_URL = "http://localhost:5001";
 
 export default function CreateReview() {
-  const { user } = useOutletContext();
+  const { user } = useOutletContext().user;
   const { documentId } = useParams();
   const formInitialState = { content: "", rating: "" };
 
@@ -39,7 +39,8 @@ export default function CreateReview() {
 
   async function sendForm(event) {
     event.preventDefault();
-
+  console.log("localStorage.user:", localStorage.user);
+  console.log("user från context:", user);
     try {
       // const currentBook = books.find((book) => book.documentId === documentId);
 
@@ -51,11 +52,21 @@ export default function CreateReview() {
         },
         body: JSON.stringify({
           data: {
-            content: formData.content,
+            content: [
+              {
+                type: "paragraph",
+                children: [
+                  {
+                    type: "text",
+                    text: formData.content
+                  }
+                ]
+              }
+            ],
             rating: Number(formData.rating),
 
             book: documentId,
-            user: user.id,
+            /* user: user.id, */
           },
         }),
       });
@@ -63,6 +74,8 @@ export default function CreateReview() {
       const result = await response.json();
 
       console.log(result);
+
+console.log("Strapi fel:", JSON.stringify(result.error, null, 2));
 
       if (!response.ok) {
         throw new Error(result.error?.message || "Något gick fel");
@@ -83,7 +96,7 @@ export default function CreateReview() {
         <br />
         <div>
           <h3>Din recension:</h3>
-          <p>Skriven av: {formData.users_permission_user}</p>
+          <p>Skriven av: {user.username}</p>
 
           <p>Recension: {formData.content}</p>
 
@@ -104,7 +117,7 @@ export default function CreateReview() {
           <textarea
             required
             name="content"
-            // type="text"
+            type="text"
             placeholder="Skriv din recension här..."
             value={formData.content}
             onChange={updateFormData}
