@@ -4,12 +4,14 @@ import { useParams } from "react-router";
 import useFetch from "../utils/useFetch";
 import GetAllReviews from "./GetAllReviews";
 
+const STRAPI_URL = "http://localhost:5001";
+
 // CreateReview.route = {
 //   path: "create-review",
 // };
 
 export default function CreateReview() {
-  const context = useOutletContext();
+  const context = useOutletContext().user;
   const user = context?.user ?? null;
   const { documentId } = useParams();
   const formInitialState = { content: "", rating: "" };
@@ -62,8 +64,8 @@ export default function CreateReview() {
               }
             ],
             rating: Number(formData.rating),
-
             book: documentId,
+            user: user.id
           },
         }),
       });
