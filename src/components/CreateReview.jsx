@@ -8,10 +8,9 @@ import GetAllReviews from "./GetAllReviews";
 //   path: "create-review",
 // };
 
-const STRAPI_URL = "http://localhost:5001";
-
 export default function CreateReview() {
-  const { user } = useOutletContext().user;
+  const context = useOutletContext();
+  const user = context?.user ?? null;
   const { documentId } = useParams();
   const formInitialState = { content: "", rating: "" };
 
@@ -39,8 +38,7 @@ export default function CreateReview() {
 
   async function sendForm(event) {
     event.preventDefault();
-  console.log("localStorage.user:", localStorage.user);
-  console.log("user från context:", user);
+
     try {
       // const currentBook = books.find((book) => book.documentId === documentId);
 
@@ -66,16 +64,11 @@ export default function CreateReview() {
             rating: Number(formData.rating),
 
             book: documentId,
-            /* user: user.id, */
           },
         }),
       });
 
       const result = await response.json();
-
-      console.log(result);
-
-console.log("Strapi fel:", JSON.stringify(result.error, null, 2));
 
       if (!response.ok) {
         throw new Error(result.error?.message || "Något gick fel");
@@ -110,40 +103,42 @@ console.log("Strapi fel:", JSON.stringify(result.error, null, 2));
     <>
       <br />
       <h2>Skriv din recension</h2>
-      <form onSubmit={sendForm}>
-        <br />
-        <label>
-          Recension:
-          <textarea
-            required
-            name="content"
-            type="text"
-            placeholder="Skriv din recension här..."
-            value={formData.content}
-            onChange={updateFormData}
-          ></textarea>
-        </label>
-        <br />
-        <label>
-          Betyg:
-          <select
-            required
-            name="rating"
-            value={formData.rating}
-            onChange={updateFormData}
-          >
-            <option>Betygsätt din recension...</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
+      {user ? (
+        <form onSubmit={sendForm}>
           <br />
+          <label>
+            Recension:
+            <textarea
+              required
+              name="content"
+              type="text"
+              placeholder="Skriv din recension här..."
+              value={formData.content}
+              onChange={updateFormData}
+            ></textarea>
+          </label>
           <br />
-        </label>
-        <button type="submit">Skicka</button>
-      </form>
+          <label>
+            Betyg:
+            <select
+              required
+              name="rating"
+              value={formData.rating}
+              onChange={updateFormData}
+            >
+              <option>Betygsätt din recension...</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+            <br />
+            <br />
+          </label>
+          <button type="submit">Skicka</button>
+        </form>
+      ) : (<p>Du måste vara inloggad för att kunna skriva en recension</p>)}
     </>
   );
 }
