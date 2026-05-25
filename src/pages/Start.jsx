@@ -1,4 +1,6 @@
 import GetAllBooks from "../components/GetAllBooks";
+import { useSearchParams } from "react-router";
+import heroImage from "../images/hero-books.jpg";
 
 Start.route = {
   path: "/",
@@ -9,10 +11,21 @@ Start.route = {
 console.log("testar routes");
 
 export default function Start() {
+  const [searchParams] = useSearchParams();
+
+  const search = searchParams.get("query") || "";
   return (
     <>
-      <h2>Welcome!</h2>
-      <GetAllBooks />
+      {!search && (
+        <section className="hero">
+          <img src={heroImage} alt="Books" />
+          <div className="hero-overlay">
+            <h2>Welcome!</h2>
+            <p>Discover, review and share your favorite books</p>
+          </div>
+        </section>
+      )}
+      <GetAllBooks search={search} />
     </>
   );
 }

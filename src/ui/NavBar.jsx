@@ -21,7 +21,7 @@ export default function NavBar({ user, setUser }) {
     if (!search.trim()) return;
 
     /* skicka användaren till search-sidan */
-    navigate(`/search?query=${search}`);
+    navigate(`/?query=${search}`);
   }
 
   return (

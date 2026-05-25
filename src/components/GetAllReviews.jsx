@@ -1,34 +1,37 @@
 import useFetch from "../utils/useFetch";
 import { useNavigate, useParams } from "react-router";
-import CreateReview from "../pages/CreateReview";
+import CreateReview from "./CreateReview";
 
 const STRAPI_URL = "http://localhost:5001";
 
 export default function GetAllReviews() {
   const { documentId } = useParams();
-  const [reviews, loading] = useFetch(`/api/reviews?filters[book][documentId][$eq]=${documentId}`);
+  const [reviews, loading] = useFetch(
+    // `/api/reviews?filters[book][documentId][$eq]=${documentId}`,
+    `/api/reviews?populate=user&filters[book][documentId][$eq]=${documentId}`,
+  );
   const navigate = useNavigate();
 
-
-    if (loading) {
-      return <p>Laddar recensioner...</p>;
-    }
-
-    return (
-      <section className="reviews">
-
-  {reviews.map(({ documentId, content, rating }) => (
-    <article key={documentId}>
-      <p>{content?.[0]?.children?.[0]?.text}</p>
-      <p>{rating}</p>
-    </article>
-  ))}
-          
-        <button onClick={() => navigate("/create-review")}>
-          Skriv din recension
-        </button>
-
-</section>
-        );
+  if (loading) {
+    return <p>Laddar recensioner...</p>;
+  }
+  if (!reviews?.length) {
+    return <p>Det finns inga recensioner ännu.</p>;
   }
 
+  return (
+    <section className="reviews">
+      {reviews.map(({ documentId, user, content, rating }) => (
+        <article key={documentId}>
+          <p>Skriven av: {user?.username} </p>
+          <p>Recension: {content?.[0]?.children?.[0]?.text}</p>
+          <p>
+            Betyg:
+            {rating}
+          </p>{" "}
+          <br />
+        </article>
+      ))}
+    </section>
+  );
+}
