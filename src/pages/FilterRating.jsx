@@ -47,23 +47,31 @@ export default function FilterRating() {
       {/* resultat */}
       {loading && <p>Laddar...</p>}
 
-      {reviews.map((review) => (
-        <div key={review.id}>
-          <h3>{review.book?.title}</h3>
-          <p>
-            Författare: {review.book?.author?.firstName}
-            {review.book?.author?.lastName}
-          </p>
-          <p>Recension: {review.content?.[0]?.children?.[0]?.text}</p>
-          <p>Skriven av: {review.user?.username}</p>
-          <button
-            onClick={() => navigate(`/one-book/${review.book?.documentId}`)}
-          >
-            Läs mer
-          </button>
-          <br />
-        </div>
-      ))}
+      {reviews.map((review) => {
+        const image = review.book?.image;
+        const imageUrl = image?.formats?.small?.url || image?.url;
+        const fullImageUrl = imageUrl ? `${STRAPI_URL}${imageUrl}` : null;
+
+        return (
+          <div key={review.id} className="book">
+            {fullImageUrl && (
+              <img src={fullImageUrl} alt={review.book?.title} />
+            )}
+            <h3>{review.book?.title}</h3>
+            <p>
+              Författare: {review.book?.author?.firstName}{" "}
+              {review.book?.author?.lastName}
+            </p>
+            <p>Recension: {review.content?.[0]?.children?.[0]?.text}</p>
+            <p>Skriven av: {review.user?.username}</p>
+            <button
+              onClick={() => navigate(`/one-book/${review.book?.documentId}`)}
+            >
+              Läs mer
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 }
