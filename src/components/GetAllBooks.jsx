@@ -1,6 +1,5 @@
 import useFetch from "../utils/useFetch";
 import { useNavigate } from "react-router";
-import { useEffect } from "react";
 
 const STRAPI_URL = "http://localhost:5001";
 
@@ -9,15 +8,8 @@ export default function GetAllBooks({ search }) {
     ? `/api/books/search/${search}`
     : "/api/books?populate=*";
 
-  console.log("SEARCH:", search);
-  console.log("URL:", url);
-
   const [books, loading, update] = useFetch(url);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    update();
-  }, [search]);
 
   if (loading) {
     return <p>Laddar böcker...</p>;
@@ -31,7 +23,6 @@ export default function GetAllBooks({ search }) {
     <section className="books">
       {books.map(({ documentId, image, title, author, genre, description }) => {
         const imageUrl = image && (image.formats?.small?.url || image.url);
-
         const fullImageUrl = imageUrl ? `${STRAPI_URL}${imageUrl}` : null;
 
         return (

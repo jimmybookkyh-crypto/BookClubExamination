@@ -29,6 +29,7 @@ export default function FilterRating() {
 
   return (
     <div>
+      <h2>Filtrera efter betyg</h2>
       <select
         value={selectedStars ?? ""}
         onChange={(e) => fetchByRating(e.target.value)}
@@ -48,14 +49,13 @@ export default function FilterRating() {
 
       {reviews.map((review) => (
         <div key={review.id}>
-          <p>Betyg: {review.rating}</p>
-          <p>Bok: {review.book?.title}</p>
+          <h3>{review.book?.title}</h3>
           <p>
             Författare: {review.book?.author?.firstName}
             {review.book?.author?.lastName}
           </p>
           <p>Recension: {review.content?.[0]?.children?.[0]?.text}</p>
-          <p>Användare: {review.user?.username}</p>
+          <p>Skriven av: {review.user?.username}</p>
           <button
             onClick={() => navigate(`/one-book/${review.book?.documentId}`)}
           >
