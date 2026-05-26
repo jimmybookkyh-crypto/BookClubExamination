@@ -19,7 +19,7 @@ export default function GetOneBook({ user, setUser }) {
     return <p>Laddar bok...</p>;
   }
 
-  const { image, title, author, genre, content } = book || {};
+  const { image, title, author, genre, description } = book || {};
 
   const fullImageUrl = image?.formats?.small?.url
     ? `${STRAPI_URL}${image.formats.small.url}`
@@ -44,7 +44,7 @@ export default function GetOneBook({ user, setUser }) {
         <br />
         <p>
           Kort beskrvning om boken:
-          {content?.[0]?.children?.[0]?.text}
+          {description?.[0]?.children?.[0]?.text}
         </p>
       </section>
       <br />
