@@ -25,7 +25,7 @@ export default function FilterGenre() {
       .then((res) => res.json())
       .then((data) => {
         console.log("Bok-svar från Strapi:", data);
-        setGenres(data.data ?? []); 
+        setBooks(data.data ?? []); 
         setLoading(false);
       });
   }
@@ -34,6 +34,7 @@ export default function FilterGenre() {
     const selected = e.target.value;
     setGenre(selected);
     if (selected) fetchByGenre(selected);
+    else setBooks([]);
   }
 
   return (
@@ -50,14 +51,24 @@ export default function FilterGenre() {
 
       {loading && <p>Laddar...</p>}
 
-      {genres.map((book) => (
+        {/* resultat */}
+      {books.map((book) => {
+        const image = book?.image;
+        const imageUrl = image?.formats?.small?.url || image?.url;
+        const fullImageUrl = imageUrl ? `${STRAPI_URL}${imageUrl}` : null;
+
+        return (
         <div key={book.id}>
-          <p>{book.title}</p>
-          <p>Genre: {book.genre?.name}</p>
-          <p>Författare: {book.author?.firstName} {book.author?.lastName}</p>
-          <p>Utgivingsår: {book.year}</p>
+            {fullImageUrl && (
+              <img src={fullImageUrl} alt={book?.title} />
+            )}
+          <h3>{book.title}</h3>
+          <p><b>Författare:</b> {book.author?.firstName} {book.author?.lastName}</p>
+          <p><b>Utgivingsår:</b> {book.year}</p>
+          <br />
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
