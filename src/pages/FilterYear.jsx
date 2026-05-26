@@ -1,79 +1,84 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+
+FilterYear.route = {
+  path: "/filter-year",
+};
+
+const STRAPI_URL = "http://localhost:5001";
 
 export default function FilterYear() {
-
   const [books, setBooks] = useState([]);
-  const [selectedLetter, setSelectedLetter] = useState("");
+  const [years, setYears] = useState([]);
+  const [year, setYear] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const years = [
-    "2024",
-    "2023",
-    "2022",
-    "2021",
-    "2020",
-    "2019",
-    "2018",
-  ];
-
+  // Hämta alla år när sidan laddas
   useEffect(() => {
-
-    fetch("http://localhost:5001/api/books")
-
+    fetch(`${STRAPI_URL}/api/books`)
       .then((res) => res.json())
-
       .then((data) => {
+        // Hämta ut alla years
+        const allYears = data.data.map((book) => book.year);
 
-        setBooks(data.data);
+        // Ta bort dubletter
+        const uniqueYears = [...new Set(allYears)];
 
+        setYears(uniqueYears);
       });
-
   }, []);
 
-  const filteredBooks = books.filter((book) => {
+  // Hämta böcker baserat på year
+  function fetchByYear(selectedYear) {
+    setLoading(true);
 
-    if (!selectedLetter) return false;
+    fetch(`${STRAPI_URL}/api/books/year/${selectedYear}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Books from Strapi:", data);
 
-    return String(book.attributes.year)
-      .startsWith(selectedLetter);
+        setBooks(data.data ?? []);
+        setLoading(false);
+      });
+  }
 
-  });
+  // När man väljer ett år
+  function handleChange(e) {
+    const selected = e.target.value;
+
+    setYear(selected);
+
+    if (selected) {
+      fetchByYear(selected);
+    }
+  }
 
   return (
-
     <div>
+      <h2>Filtrera efter år</h2>
 
-      <div className="alphabet-list">
+      <select value={year} onChange={handleChange}>
+        <option value="">-- Välj år --</option>
 
-        {years.map((year) => (
-
-          <button
-            key={year}
-            onClick={() => setSelectedLetter(year)}
-          >
-            {year}
-          </button>
-
+        {years.map((y) => (
+          <option key={y} value={y}>
+            {y}
+          </option>
         ))}
+      </select>
 
-      </div>
+      {loading && <p>Laddar...</p>}
 
-      {filteredBooks.map((book) => (
-
+      {books.map((book) => (
         <div key={book.id}>
-
-          <h3>
-            {book.attributes.year}
-          </h3>
-
+          <p>{book.title}</p>
+          <p>Genre: {book.genre?.name}</p>
           <p>
-            {book.attributes.title}
+            Författare: {book.author?.firstName}{" "}
+            {book.author?.lastName}
           </p>
-
+          <p>Utgivningsår: {book.year}</p>
         </div>
-
       ))}
-
     </div>
-
   );
 }
