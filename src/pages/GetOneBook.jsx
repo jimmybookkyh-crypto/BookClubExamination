@@ -21,7 +21,11 @@ export default function GetOneBook({ user, setUser }) {
 
   const { image, title, author, genre, content } = book || {};
 
-  const fullImageUrl = image?.url ? `${STRAPI_URL}${image.url}` : null;
+  const fullImageUrl = image?.formats?.small?.url
+    ? `${STRAPI_URL}${image.formats.small.url}`
+    : image?.url
+      ? `${STRAPI_URL}${image.url}`
+      : null;
 
   return (
     <>
