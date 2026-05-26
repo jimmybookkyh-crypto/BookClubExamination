@@ -19,6 +19,7 @@ module.exports = createCoreController("api::book.book", ({ strapi }) => ({
       },
       populate: {
         genre: true,
+        year: true,
         author: true,
         image: true,
       },
@@ -58,6 +59,7 @@ module.exports = createCoreController("api::book.book", ({ strapi }) => ({
       },
       populate: {
         genre: true,
+        year: true,
         author: true,
         image: true,
       },
@@ -65,4 +67,25 @@ module.exports = createCoreController("api::book.book", ({ strapi }) => ({
 
     return { data: books };
   },
+
+    async findByYear(ctx) {
+    const { year } = ctx.params;
+    const books = await strapi.entityService.findMany("api::book.book", {
+      filters: {
+        year: {
+          name: {
+            $eqi: year,
+          },
+        },
+      },
+      populate: {
+        genre: true,
+        year: true,
+        author: true,
+        image: true,
+      },
+    });
+    return { data: books };
+  },
+
 }));
