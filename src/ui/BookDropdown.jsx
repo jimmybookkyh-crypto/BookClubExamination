@@ -8,7 +8,6 @@ export default function BookDropdown({ user }) {
   return (
 
     <div className="dropdown">
-
       <button
         className="dropbtn"
         onClick={() => setOpen(!open)}
