@@ -68,15 +68,17 @@ export default function FilterYear() {
 
       {loading && <p>Laddar...</p>}
 
+
       {books.map((book) => (
         <div key={book.id}>
+          <p>Utgivningsår: {book.year}</p>
           <p>{book.title}</p>
           <p>Genre: {book.genre?.name}</p>
           <p>
             Författare: {book.author?.firstName}{" "}
             {book.author?.lastName}
           </p>
-          <p>Utgivningsår: {book.year}</p>
+          
         </div>
       ))}
     </div>

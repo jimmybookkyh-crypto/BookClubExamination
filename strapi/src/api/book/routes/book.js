@@ -1,17 +1,9 @@
-async findByYear(ctx) {
-  const { year } = ctx.params;
+'use strict';
 
-  const books = await strapi.entityService.findMany(
-    "api::book.book",
-    {
-      filters: {
-        year: year,
-      },
-      populate: ["genre", "author"],
-    }
-  );
+/**
+ * book router
+ */
 
-  ctx.body = {
-    data: books,
-  };
-}
+const { createCoreRouter } = require('@strapi/strapi').factories;
+
+module.exports = createCoreRouter('api::book.book');
