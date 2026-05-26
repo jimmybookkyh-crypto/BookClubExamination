@@ -27,6 +27,7 @@ export default function NavBar({ user, setUser }) {
 
     /* skicka användaren till search-sidan */
     navigate(`/?query=${search}`);
+    setSearch("");
   }
 
   return (
