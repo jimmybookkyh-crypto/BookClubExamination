@@ -92,11 +92,8 @@ module.exports = createCoreController("api::book.book", ({ strapi }) => ({
     const books = await strapi.entityService.findMany("api::book.book", {
       filters: {
         year: {
-          name: {
-            $eqi: year,
-          },
-        },
-      },      
+          $eq:Number(year),},
+         },    
       populate: {
         genre: true,        
         author: true,

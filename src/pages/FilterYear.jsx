@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router";
 FilterYear.route = {
   path: "/filter-year",
 };
@@ -7,6 +7,7 @@ FilterYear.route = {
 const STRAPI_URL = "http://localhost:5001";
 
 export default function FilterYear() {
+  const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [years, setYears] = useState([]);
   const [year, setYear] = useState("");
@@ -66,21 +67,44 @@ export default function FilterYear() {
         ))}
       </select>
 
+            {/* resultat */}
       {loading && <p>Laddar...</p>}
 
+      {books.map((book) => {
+        const image = book.image;
+        const imageUrl =
+          image?.formats?.small?.url || image?.url;
 
-      {books.map((book) => (
-        <div key={book.id}>
-          <p>Utgivningsår: {book.year}</p>
-          <p>{book.title}</p>
-          <p>Genre: {book.genre?.name}</p>
-          <p>
-            Författare: {book.author?.firstName}{" "}
-            {book.author?.lastName}
-          </p>
-          
-        </div>
-      ))}
+        const fullImageUrl = imageUrl
+          ? `${STRAPI_URL}${imageUrl}`
+          : null;
+
+        return (
+          <div key={book.id} className="book">
+            <p>Utgivningsår: {book.year}</p>
+
+            {fullImageUrl && (
+              <img
+                src={fullImageUrl}
+                alt={book.title}
+              />
+            )}
+            <h3>{book.title}</h3>
+            <p>
+              Författare:
+              {book.author?.firstName}{" "}
+              {book.author?.lastName}
+            </p>
+            {/* <p>Recension: {review.content?.[0]?.children?.[0]?.text}</p> 
+            <p>Skriven av: {review.user?.username}</p>*/}
+            <button
+              onClick={() => navigate(`/one-book/${book.documentId}`)}
+            >
+              Läs mer
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 }
