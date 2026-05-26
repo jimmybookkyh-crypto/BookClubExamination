@@ -1,26 +1,56 @@
 import { NavLink } from "react-router";
 import { useState } from "react";
 
-export default function BookDropdown() {
+export default function BookDropdown({ user }) {
+
   const [open, setOpen] = useState(false);
 
   return (
-    <div
-      className="dropdown"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-    >
-      <span className="dropdown-title">
+
+    <div className="dropdown">
+
+      <button
+        className="dropbtn"
+        onClick={() => setOpen(!open)}
+      >
         Böcker ▾
-      </span>
+      </button>
 
       {open && (
-        <div className="dropdown-menu">
-          <NavLink to="/books">Alla böcker</NavLink>
-          <NavLink to="/books/categories">Kategorier</NavLink>
-          <NavLink to="/books/favorites">Favoriter</NavLink>
+
+        <div className="dropdown-content">
+
+          {user ? (
+
+            <NavLink to="/create-book">
+              Lägg till bok
+            </NavLink>
+
+          ) : (
+
+            <NavLink to="/login">
+              Logga in
+            </NavLink>
+
+          )}
+
+          <NavLink to="/filter-genre">
+            Filtrera efter genre
+          </NavLink>
+
+          <NavLink to="/filter-rating">
+            Filtrera efter recension
+          </NavLink>
+
+          <NavLink to="/filter-year">
+            Filtrera efter utgivningsår
+          </NavLink>
+
         </div>
+
       )}
+
     </div>
+
   );
 }
