@@ -1,4 +1,4 @@
-import FilterYear from "../components/FilterYear";
+import FilterYear from "./FilterYear";
 
 export default function FilterYearPage() {
 

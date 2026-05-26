@@ -2,6 +2,7 @@ import routes from "../routes";
 import { NavLink, useNavigate } from "react-router";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
+import BookDropdown from "./BookDropdown";
 
 export default function NavBar({ user, setUser }) {
   const [search, setSearch] = useState("");
@@ -33,9 +34,8 @@ export default function NavBar({ user, setUser }) {
             {label}
           </NavLink>
         ))}
-      <div className="dropdown">
-        <button>Böcker ▾</button>
-      </div>
+        <BookDropdown user ={user} />
+
 
       <form onSubmit={handleSearchSubmit}>
         <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
