@@ -1,3 +1,4 @@
+
 "use strict";
 
 /**
@@ -67,7 +68,27 @@ module.exports = createCoreController("api::book.book", ({ strapi }) => ({
 
     return { data: books };
   },
+/**
+ * book unique year controller
+ */
+    async findUniqueYear(ctx) {
+    const books = await strapi.documents('api::book.book').findMany({
+      fields: ['year']
+    });
 
+    const year = [...new Set(books
+      .map(book => book.year))] 
+      .filter(year => year) 
+      .sort();                   
+
+    // ctx.body = what you want return from your route
+    ctx.body = { data: year };
+  },
+    
+  /**
+   * book year controller
+   */
+    
     async findByYear(ctx) {
     const { year } = ctx.params;
     const books = await strapi.entityService.findMany("api::book.book", {
