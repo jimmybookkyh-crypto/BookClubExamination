@@ -19,8 +19,7 @@ module.exports = createCoreController("api::book.book", ({ strapi }) => ({
         },
       },
       populate: {
-        genre: true,
-        year: true,
+        genre: true,        
         author: true,
         image: true,
       },
@@ -59,8 +58,7 @@ module.exports = createCoreController("api::book.book", ({ strapi }) => ({
         ],
       },
       populate: {
-        genre: true,
-        year: true,
+        genre: true,        
         author: true,
         image: true,
       },
@@ -98,10 +96,9 @@ module.exports = createCoreController("api::book.book", ({ strapi }) => ({
             $eqi: year,
           },
         },
-      },
+      },      
       populate: {
-        genre: true,
-        year: true,
+        genre: true,        
         author: true,
         image: true,
       },

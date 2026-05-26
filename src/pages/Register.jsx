@@ -41,7 +41,7 @@ export default function Register() {
   }
   return (
     <>
-      <h2>Register</h2>
+      <h2>Registrera konto</h2>
       <form onSubmit={sendForm}>
         <label>
           {" "}
@@ -81,7 +81,7 @@ export default function Register() {
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
       <p>
-        Don't have an account? <Link to="/register">Logga in här</Link>
+        Har du redan konto? <Link to="/login">Logga in här</Link>
       </p>
     </>
   );
