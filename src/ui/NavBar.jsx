@@ -1,5 +1,5 @@
 import routes from "../routes";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate, useLocation } from "react-router";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
 import BookDropdown from "./BookDropdown";
@@ -8,6 +8,10 @@ export default function NavBar({ user, setUser }) {
   const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const showSearchBar =
+    location.pathname === "/" || location.pathname.startsWith("/one-book/");
 
   function logout() {
     delete localStorage.user;
@@ -23,6 +27,7 @@ export default function NavBar({ user, setUser }) {
 
     /* skicka användaren till search-sidan */
     navigate(`/?query=${search}`);
+    setSearch("");
   }
 
   return (
@@ -34,12 +39,16 @@ export default function NavBar({ user, setUser }) {
             {label}
           </NavLink>
         ))}
-        <BookDropdown user ={user} />
+      <BookDropdown user={user} />
 
-
-      <form onSubmit={handleSearchSubmit}>
-        <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
-      </form>
+      {showSearchBar && (
+        <form onSubmit={handleSearchSubmit}>
+          <SearchBar
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </form>
+      )}
 
       <div className="auth">
         {user ? (
