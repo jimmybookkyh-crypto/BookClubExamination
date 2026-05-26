@@ -38,6 +38,7 @@ export default function FilterGenre() {
 
   return (
     <div>
+      <h2>Filtrera efter genre</h2>
       <select value={genre} onChange={handleChange}>
         <option value="">-- Välj genre --</option>
         {genres.map((g) => (
@@ -53,7 +54,8 @@ export default function FilterGenre() {
         <div key={book.id}>
           <p>{book.title}</p>
           <p>Genre: {book.genre?.name}</p>
-          <p>Författare: {book.author?.name}</p>
+          <p>Författare: {book.author?.firstName} {book.author?.lastName}</p>
+          <p>Utgivingsår: {book.year}</p>
         </div>
       ))}
     </div>
