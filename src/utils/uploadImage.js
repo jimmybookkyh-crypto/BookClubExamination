@@ -3,8 +3,11 @@ export default async function uploadImage(file) {
   const formData = new FormData();
   formData.append("files", file);
 
+  const user = JSON.parse(localStorage.user);
+
   const response = await fetch("/api/upload", {
     method: "POST",
+    headers: { Authorization: `Bearer ${user.jwt}` },
     body: formData,
   });
 
