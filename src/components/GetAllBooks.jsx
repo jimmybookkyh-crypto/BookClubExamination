@@ -46,7 +46,7 @@ export default function GetAllBooks({ search }) {
             const fullImageUrl = imageUrl ? `${STRAPI_URL}${imageUrl}` : null;
 
             return (
-              <div key={documentId} className="books">
+              <div key={documentId} className="book-card">
                 {fullImageUrl && <img src={fullImageUrl} alt={title} />}
                 <h3>{title}</h3>
                 <div>
