@@ -1,5 +1,6 @@
 import useFetch from "../utils/useFetch";
 import buildBooksUrl from "../utils/buildBooksUrl";
+import Pagination from "./Pagination";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 
@@ -31,11 +32,6 @@ export default function GetAllBooks({ search }) {
   }
 
   const pageCount = books.pagination?.pageCount || 1;
-
-  function changePage(add) {
-    setPage(page + add);
-    scrollTo(0, 0);
-  }
 
   return (
     <>
@@ -70,21 +66,8 @@ export default function GetAllBooks({ search }) {
           },
         )}
       </section>
-
       {!search?.trim() && (
-        <p>
-          <button disabled={page <= 1} onClick={() => changePage(-1)}>
-            Föregående sida
-          </button>
-          &nbsp;
-          <b>
-            Sida {page}/{pageCount}
-          </b>
-          &nbsp;
-          <button disabled={page >= pageCount} onClick={() => changePage(1)}>
-            Nästa sida
-          </button>
-        </p>
+        <Pagination page={page} pageCount={pageCount} setPage={setPage} />
       )}
     </>
   );
