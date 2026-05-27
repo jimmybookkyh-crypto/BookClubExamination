@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Profile from '../pages/Profile';
+import userEvent from '@testing-library/user-event';
 
 vi.mock('react-router', () => ({
   useNavigate: () => vi.fn(),
@@ -33,5 +34,33 @@ describe('Profile', () => {
     ).toBeInTheDocument();
 
   });
+  it('kan ändra email-fältet', async () => {
 
+    const user = userEvent.setup();
+    render(<Profile />);
+    const emailInput = screen.getByDisplayValue('joppe@test.com');
+
+    await user.clear(emailInput);
+    await user.type(emailInput, 'ny@test.com');
+
+    expect(emailInput).toHaveValue('ny@test.com');
+
+  });
+
+  it('visar dialogruta för att avsluta konto', async () => {
+
+    const user = userEvent.setup();
+    render(<Profile />);
+
+    await user.click(
+      screen.getByRole('button', {
+        name: /avsluta konto/i
+      })
+    );
+
+    expect(
+      screen.getByText(/bekräfta borttagning/i)
+    ).toBeInTheDocument();
+
+  });
 });

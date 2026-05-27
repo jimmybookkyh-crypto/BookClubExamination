@@ -26,8 +26,35 @@ const renderComponent = () =>
   );
 
 describe("CreateBook", () => {
-  it("renderar formuläret", () => {
+  it("renderar formuläret", () => {     // testar att komponenten renderas
     renderComponent();
+
     expect(screen.getByText("Lägg till en ny bok")).toBeInTheDocument();
+  });
+
+  it("skriva i titel fältet", async () => { // testar att man kan skriva i titel fältet och att det uppdateras korrekt
+    const user = userEvent.setup();   
+    renderComponent();
+
+    const titleInput = screen.getByPlaceholderText("Titel");
+    await user.type(titleInput, "Mio min Mio");
+
+    expect(titleInput).toHaveValue("Mio min Mio");
+  });
+
+  it("visar fält för ny författare", async () => { // testar att användaren kan välja att lägga till en ny författare och att fältet för det visas
+    const user = userEvent.setup();
+
+    renderComponent();
+
+    const select = screen.getByRole("combobox", {
+      name: /författare/i,
+    });
+
+    await user.selectOptions(select, "__new__");
+
+    expect(
+      screen.getByRole("textbox", { name: /förnamn/i })
+    ).toBeInTheDocument();
   });
 });
