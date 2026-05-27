@@ -1,5 +1,6 @@
 import useFetch from "../utils/useFetch";
 import { useParams } from "react-router";
+import { useState } from "react";
 import GetAllReviews from "../components/GetAllReviews";
 import CreateReview from "../components/CreateReview";
 
@@ -12,6 +13,7 @@ const STRAPI_URL = "http://localhost:5001";
 
 export default function GetOneBook({ user, setUser }) {
   const { documentId } = useParams();
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const [book, loading] = useFetch(`/api/books/${documentId}?populate=*`);
 
@@ -48,10 +50,11 @@ export default function GetOneBook({ user, setUser }) {
         </p>
       </section>
       <br />
-      <h2>Resencioner</h2>
-      <GetAllReviews />
+      <h2>Recensioner</h2>
+      <GetAllReviews key={refreshKey} />
       <br />
-      <CreateReview user={user} setUser={setUser} />
+      <CreateReview user={user} setUser={setUser}
+      onReviewCreated={() => setRefreshKey(k => k + 1)} />
     </>
   );
 }
