@@ -1,20 +1,26 @@
 import useFetch from "../utils/useFetch";
+import buildBooksUrl from "../utils/buildBooksUrl";
 import { useNavigate } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const STRAPI_URL = "http://localhost:5001";
+const PAGE_SIZE = 16;
 
 export default function GetAllBooks({ search }) {
-  const url = search?.trim()
-    ? `/api/books/search/${search}`
-    : "/api/books?populate=*";
+  const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+
+  const url = buildBooksUrl(search, page, PAGE_SIZE);
 
   const [books, loading, update] = useFetch(url);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    setPage(1);
+  }, [search]);
 
   useEffect(() => {
     update();
-  }, [search]);
+  }, [search, page]);
 
   if (loading) {
     return <p>Laddar böcker...</p>;
@@ -24,35 +30,62 @@ export default function GetAllBooks({ search }) {
     return <p>Tyvärr hittade vi inga böcker för din sökning. Försök igen 📚</p>;
   }
 
-  return (
-    <section className="books">
-      {books.map(({ documentId, image, title, author, genre, description }) => {
-        const imageUrl = image && (image.formats?.small?.url || image.url);
-        const fullImageUrl = imageUrl ? `${STRAPI_URL}${imageUrl}` : null;
+  const pageCount = books.pagination?.pageCount || 1;
 
-        return (
-          <div key={documentId} className="books">
-            {fullImageUrl && <img src={fullImageUrl} alt={title} />}
-            <h3>{title}</h3>
-            <div>
-              <h4>Författare: </h4>
-              {author?.firstName} {author?.lastName}
-            </div>
-            <div>
-              <h4>Kategori: </h4>
-              {genre?.name}
-            </div>
-            <div>
-              <h4>Kort beskrivning: </h4>
-              {description?.[0]?.children?.[0]?.text}
-            </div>
-            <br />
-            <button onClick={() => navigate(`/one-book/${documentId}`)}>
-              Läs mer
-            </button>
-          </div>
-        );
-      })}
-    </section>
+  function changePage(add) {
+    setPage(page + add);
+    scrollTo(0, 0);
+  }
+
+  return (
+    <>
+      <section className="books">
+        {books.map(
+          ({ documentId, image, title, author, genre, description }) => {
+            const imageUrl = image && (image.formats?.small?.url || image.url);
+            const fullImageUrl = imageUrl ? `${STRAPI_URL}${imageUrl}` : null;
+
+            return (
+              <div key={documentId} className="book">
+                {fullImageUrl && <img src={fullImageUrl} alt={title} />}
+                <h3>{title}</h3>
+                <div>
+                  <h4>Författare: </h4>
+                  {author?.firstName} {author?.lastName}
+                </div>
+                <div>
+                  <h4>Kategori: </h4>
+                  {genre?.name}
+                </div>
+                <div>
+                  <h4>Kort beskrivning: </h4>
+                  {description?.[0]?.children?.[0]?.text}
+                </div>
+                <br />
+                <button onClick={() => navigate(`/one-book/${documentId}`)}>
+                  Läs mer
+                </button>
+              </div>
+            );
+          },
+        )}
+      </section>
+
+      {!search?.trim() && (
+        <p>
+          <button disabled={page <= 1} onClick={() => changePage(-1)}>
+            Föregående sida
+          </button>
+          &nbsp;
+          <b>
+            Sida {page}/{pageCount}
+          </b>
+          &nbsp;
+          <button disabled={page >= pageCount} onClick={() => changePage(1)}>
+            Nästa sida
+          </button>
+        </p>
+      )}
+    </>
   );
 }
