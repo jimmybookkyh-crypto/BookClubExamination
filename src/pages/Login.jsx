@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext, Link } from "react-router";
 
 Login.route = {
   path: "/login",
-  index: 10,
+  index: 11,
 };
 
 export default function Login() {
@@ -40,11 +40,11 @@ export default function Login() {
   }
   return (
     <>
-      <h2>Log in</h2>
+      <h2>Logga in</h2>
       <form onSubmit={sendForm}>
         <label>
           {" "}
-          Username or email:
+          Användarnamn eller email:
           <input
             required
             name="identifier"
@@ -55,7 +55,7 @@ export default function Login() {
         </label>
         <label>
           {" "}
-          Password:
+          Lösenord:
           <input
             required
             name="password"
@@ -64,11 +64,11 @@ export default function Login() {
             onChange={updateFormData}
           />
         </label>
-        <button type="submit"> Log in </button>
+        <button type="submit"> Logga in </button>
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
       <p>
-        Don't have an account? <Link to="/register">Register here</Link>
+        Har du inget konto? <Link to="/register">Registrera här</Link>
       </p>
     </>
   );
