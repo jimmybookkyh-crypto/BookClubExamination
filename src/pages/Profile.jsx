@@ -9,7 +9,7 @@ export default function Profile() {
 
   const { user, setUser } = useOutletContext();
   const navigate = useNavigate();
-
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const formInitialState = {
     email: user?.user?.email || '',
@@ -73,31 +73,23 @@ export default function Profile() {
     });
     setSaved(true);
   }
-  async function deleteAccount() {
+async function deleteAccount() {
 
-    const confirmed = window.confirm(
-      'Är du säker på att du vill avsluta ditt konto? Det går inte att ångra.'
-    );
-
-    if (!confirmed) {
-      return;
+  const response = await fetch('/api/users/' + user.user.id, {
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Bearer ' + user.jwt
     }
+  });
 
-    const response = await fetch('/api/users/' + user.user.id, {
-      method: 'DELETE',
-      headers: {
-        Authorization: 'Bearer ' + user.jwt
-      }
-    });
-
-    if (!response.ok) {
-      setError('Kunde inte ta bort kontot');
-      return;
-    }
-
-    logout();
-    navigate('/');
+  if (!response.ok) {
+    setError('Kunde inte ta bort kontot');
+    return;
   }
+
+  logout();
+  navigate('/');
+}
   return <>
     <h2>Konto för {user.user.username}</h2>
     <p>Redigera din profilinformation nedan.</p>
@@ -123,12 +115,49 @@ export default function Profile() {
       <button type="submit">Spara ändringar</button><br/>
       <button onClick={() => navigate('/')}>
         Avbryt</button><br />
-      <button type="button" onClick={deleteAccount} style={{ color: 'red' }}>
+      <button
+        type="button"
+        onClick={() => setShowDeleteDialog(true)}
+        style={{ color: 'red' }}
+      >
         Avsluta konto
       </button><br/>
       <button onClick={logout}>Logga ut</button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {saved && <p style={{ color: 'green' }}>Ändringar sparade.</p>}
     </form>
+      {showDeleteDialog && (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <div style={{
+          background: 'white',
+          padding: '2rem',
+          borderRadius: '8px',
+          minWidth: '300px'
+        }}>
+          <h3>Bekräfta borttagning</h3>
+          <p>Är du säker på att du vill avsluta ditt konto?</p>
+
+          <button
+            type="button" onClick={deleteAccount} style={{ color: 'red', marginRight: '1rem' }}>
+            Ja, ta bort mitt konto
+          </button>
+
+          <button
+            type="button" onClick={() => setShowDeleteDialog(false)}>
+            Avbryt
+          </button>
+        </div>
+      </div>
+  )}
   </>;
 }
