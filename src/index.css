@@ -180,3 +180,48 @@ nav a {
   background: rgba(0, 0, 0, 0.77);
   z-index: 0;
 }
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background: none;
+  border: none;
+  font: inherit;
+  color: black;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background: white;
+  min-width: 220px;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  box-shadow: var(--shadow);
+
+  z-index: 1000;
+}
+
+.dropdown-content a {
+  padding: 10px 14px;
+  text-decoration: none;
+  color: black;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background: #f3f3f3;
+}
