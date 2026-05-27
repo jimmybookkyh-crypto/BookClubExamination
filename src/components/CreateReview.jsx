@@ -10,7 +10,7 @@ const STRAPI_URL = "http://localhost:5001";
 //   path: "create-review",
 // };
 
-export default function CreateReview() {
+export default function CreateReview({ onReviewCreated, ...rest }) {
   const context = useOutletContext().user;
   const user = context?.user ?? null;
   const { documentId } = useParams();
@@ -77,6 +77,7 @@ export default function CreateReview() {
       }
 
       setFormSent(true);
+      onReviewCreated?.();
     } catch (err) {
       console.error(err);
       setError(err.message);

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 FilterGenre.route = {
   path: '/filter-genre'
@@ -7,6 +8,7 @@ FilterGenre.route = {
 const STRAPI_URL = "http://localhost:5001";
 
 export default function FilterGenre() {
+  const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [genres, setGenres] = useState([]);
   const [genre, setGenre] = useState("");
@@ -65,7 +67,11 @@ export default function FilterGenre() {
           <h3>{book.title}</h3>
           <p><b>Författare:</b> {book.author?.firstName} {book.author?.lastName}</p>
           <p><b>Utgivingsår:</b> {book.year}</p>
-          <br />
+          <button
+              onClick={() => navigate(`/one-book/${book.documentId}`)}
+            >
+              Läs mer
+            </button>
         </div>
         );
       })}
