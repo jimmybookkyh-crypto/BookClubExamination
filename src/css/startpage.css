@@ -1,4 +1,7 @@
 main {
 background-color: var(--code-bg);
 color: var(--text);
+border: var(--border);
+color: var(--accent);
+font: var(--sans);
 }
