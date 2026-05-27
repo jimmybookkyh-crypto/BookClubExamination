@@ -24,14 +24,19 @@ export default function CreateBook() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [imageFile, setImageFile] = useState(null);
-  const [bookAuthors, bookGenres, loading] = useFetch(
+  const [authorsData, bookGenres, loading] = useFetch(
     "/api/authors?pagination[pageSize]=1000&sort=firstName,lastName",
     "/api/genres?pagination[pageSize]=1000"
   );  
+  const [bookAuthors, setBookAuthors] = useState([]);
 
   const [showAuthorInput, setShowAuthorInput] = useState(false);
   
   if (loading) { return <p>Laddar...</p>; }
+
+  if (bookAuthors.length === 0 && authorsData.length > 0) {
+    setBookAuthors(authorsData);
+  }
   
   function updateFormData(event) {
     const { name: key, value } = event.target;
@@ -90,20 +95,30 @@ async function sendForm(event) {
 
   let authorId = formData.author;
   // skapa ny author
-  if (showAuthorInput) {
-    const authorResponse = await fetch('/api/authors', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json', Authorization: `Bearer ${JSON.parse(localStorage.user).jwt}`},
-      body: JSON.stringify({
-        data: {
-          firstName: formData.newAuthorFirstName,
-          lastName: formData.newAuthorLastName
-        }
-      })
-    });
-    const authorData = await authorResponse.json();
-    authorId = authorData.data.documentId;
-  }
+if (showAuthorInput) {
+  const authorResponse = await fetch('/api/authors', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${JSON.parse(localStorage.user).jwt}`
+    },
+    body: JSON.stringify({
+      data: {
+        firstName: formData.newAuthorFirstName,
+        lastName: formData.newAuthorLastName
+      }
+    })
+  });
+
+  const authorData = await authorResponse.json();
+
+  authorId = authorData.data.documentId;
+
+  setBookAuthors(prev => [
+    ...prev,
+    authorData.data
+  ]);
+}
   // skapa ny book
   const response = await fetch('/api/books', {
     method: 'POST',
@@ -148,6 +163,7 @@ function setAuthor(event) {
       <button onClick={() => {
         setFormSent(false);
         setFormData({ ...formInitialState });
+        setShowAuthorInput(false);
       }}> Lägg till en till bok</button>
       <button onClick={() => navigate('/')}>
         Gå till startsida</button>
