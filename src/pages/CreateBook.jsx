@@ -26,7 +26,7 @@ export default function CreateBook() {
   const [imageFile, setImageFile] = useState(null);
   const [authorsData, bookGenres, loading] = useFetch(
     "/api/authors?pagination[pageSize]=1000&sort=firstName,lastName",
-    "/api/genres?pagination[pageSize]=1000"
+    "/api/genres?pagination[pageSize]=1000&sort=name"
   );  
   const [bookAuthors, setBookAuthors] = useState([]);
 
