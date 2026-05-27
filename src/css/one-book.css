@@ -1,0 +1,47 @@
+.book {
+    margin: 15px auto;
+    background-color: var(--bg);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 600px;
+
+    .image {
+        margin-top: 1rem;
+        justify-self: center;
+        align-self: center;
+    }
+
+    .title {
+        margin: 10px;
+    }
+
+    .subtitle {
+        margin: auto 10px;
+        color: #878585;
+        font-size: 16px;
+    }
+
+    .tagname {
+        margin: 10px;
+        background-color: #F7F0E4;
+        padding: 5px 15px;
+        border-radius: 10px;
+        font-size: 14px;
+        color: var(--text);
+    }
+
+    .desc {
+        text-align: left;
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .review-section {
+        width: 100%;
+        border-top: 1px solid #EEEEEE;
+        padding: 10px;
+    }
+}
