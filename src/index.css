@@ -1,5 +1,6 @@
  @import "./css/startpage.css";
  @import "./css/one-book.css";
+ @import "./css/forms-and-buttons.css";
 
 :root {
   --text: #1e1e1e;
@@ -195,6 +196,10 @@ nav a {
   color: black;
   cursor: pointer;
   padding: 8px 12px;
+
+  &:hover {
+    color: var(--accent);
+  }
 }
 
 .dropdown-content {
