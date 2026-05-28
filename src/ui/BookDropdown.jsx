@@ -21,13 +21,13 @@ export default function BookDropdown({ user }) {
 
           {user ? (
 
-            <NavLink to="/create-book">
+            <NavLink to="/create-book" onClick={() => setOpen(false)}>
               Lägg till bok
             </NavLink>
 
           ) : (
 
-            <NavLink to="/login">
+            <NavLink to="/login" onClick={() => setOpen(false)}>
               Logga in
             </NavLink>
 
