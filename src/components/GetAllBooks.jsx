@@ -66,9 +66,8 @@ export default function GetAllBooks({ search }) {
           },
         )}
       </section>
-      {!search?.trim() && (
-        <Pagination page={page} pageCount={pageCount} setPage={setPage} />
-      )}
+
+      <Pagination page={page} pageCount={pageCount} setPage={setPage} />
     </>
   );
 }
