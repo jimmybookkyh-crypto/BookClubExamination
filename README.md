@@ -80,7 +80,7 @@ När servrarna är igång hittar du applikationen på följande adresser:
 
 ---
 
-## Teknikstack
+### Teknikstack
 
 - Backend:Strapi (Headless CMS)
 - Frontend:React
