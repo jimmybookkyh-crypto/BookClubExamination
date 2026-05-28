@@ -1,78 +1,61 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import buildBooksUrl from "../utils/buildBooksUrl";
-
+import Pagination from "../components/Pagination";
 
 FilterGenre.route = {
-  path: '/filter-genre'
-}
-
+  path: "/filter-genre",
+};
 
 const STRAPI_URL = "http://localhost:5001";
 const PAGE_SIZE = 16;
 
-
-export default function FilterGenre({ search }) {
+export default function FilterGenre() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [genres, setGenres] = useState([]);
   const [genre, setGenre] = useState("");
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
- 
-  const url = buildBooksUrl(search, page, PAGE_SIZE);
 
+  const pageCount = Math.ceil(books.length / PAGE_SIZE) || 1;
+  const startIndex = (page - 1) * PAGE_SIZE;
+  const visibleBooks = books.slice(startIndex, startIndex + PAGE_SIZE);
 
-    //pagination
-    useEffect(() => {
-    setPage(1);
-  }, [search]);
-
-
-  useEffect(() => {
-  }, [search, page]);
-
-
-  const pageCount = books.pagination?.pageCount || 1;
-
-
-  function changePage(add) {
-    setPage(page + add);
-    scrollTo(0, 0);
-  }
-
-
-  // Hämta alla genres vid sidladdning
   useEffect(() => {
     fetch(`${STRAPI_URL}/api/genres`)
       .then((res) => res.json())
-      .then((data) => setGenres(data.data.sort((a, b) => a.name.localeCompare(b.name))));
+      .then((data) =>
+        setGenres(data.data.sort((a, b) => a.name.localeCompare(b.name))),
+      );
   }, []);
-
 
   function fetchByGenre(selectedGenre) {
     setLoading(true);
+
     fetch(`${STRAPI_URL}/api/books/genre/${selectedGenre}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Bok-svar från Strapi:", data);
-        setBooks((data.data ?? []).sort((a, b) => a.title.localeCompare(b.title)));
+        setBooks(
+          (data.data ?? []).sort((a, b) => a.title.localeCompare(b.title)),
+        );
+        setPage(1);
         setLoading(false);
       });
   }
 
-
   function handleChange(e) {
     const selected = e.target.value;
     setGenre(selected);
+    setPage(1);
+
     if (selected) fetchByGenre(selected);
     else setBooks([]);
   }
 
-
   return (
     <div>
       <h2>Filtrera efter genre</h2>
+
       <select value={genre} onChange={handleChange}>
         <option value="">-- Välj genre --</option>
         {genres.map((g) => (
@@ -82,49 +65,40 @@ export default function FilterGenre({ search }) {
         ))}
       </select>
 
-
       {loading && <p>Laddar...</p>}
 
+      <section className="books">
+        {visibleBooks.map((book) => {
+          const image = book?.image;
+          const imageUrl = image?.formats?.small?.url || image?.url;
+          const fullImageUrl = imageUrl ? `${STRAPI_URL}${imageUrl}` : null;
 
-        {/* resultat */}
-      {books.map((book) => {
-        const image = book?.image;
-        const imageUrl = image?.formats?.small?.url || image?.url;
-        const fullImageUrl = imageUrl ? `${STRAPI_URL}${imageUrl}` : null;
+          return (
+            <div key={book.documentId} className="book-card">
+              {fullImageUrl && <img src={fullImageUrl} alt={book?.title} />}
 
+              <h3>{book.title}</h3>
 
-        return (
-        <div key={book.id}>
-            {fullImageUrl && (
-              <img src={fullImageUrl} alt={book?.title} />
-            )}
-          <h3>{book.title}</h3>
-          <p><b>Författare:</b> {book.author?.firstName} {book.author?.lastName}</p>
-          <p><b>Utgivingsår:</b> {book.year}</p>
-          <button
-              onClick={() => navigate(`/one-book/${book.documentId}`)}
-            >
-              Läs mer
-            </button>
-        </div>
-        );
-      })}
-            {!search?.trim() && (
-        <p>
-          <button disabled={page <= 1} onClick={() => changePage(-1)}>
-            Föregående sida
-          </button>
-          &nbsp;
-          <b>
-            Sida {page}/{pageCount}
-          </b>
-          &nbsp;
-          <button disabled={page >= pageCount} onClick={() => changePage(1)}>
-            Nästa sida
-          </button>
-        </p>
+              <p>
+                <b>Författare:</b> {book.author?.firstName}{" "}
+                {book.author?.lastName}
+              </p>
+
+              <p>
+                <b>Utgivningsår:</b> {book.year}
+              </p>
+
+              <button onClick={() => navigate(`/one-book/${book.documentId}`)}>
+                Läs mer
+              </button>
+            </div>
+          );
+        })}
+      </section>
+
+      {genre && books.length > 0 && (
+        <Pagination page={page} pageCount={pageCount} setPage={setPage} />
       )}
-     
     </div>
   );
 }
