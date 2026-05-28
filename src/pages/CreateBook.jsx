@@ -112,12 +112,16 @@ if (showAuthorInput) {
 
   const authorData = await authorResponse.json();
 
-  authorId = authorData.data.documentId;
+authorId = authorData.data.documentId;
 
-  setBookAuthors(prev => [
-    ...prev,
-    authorData.data
-  ]);
+  setBookAuthors(prev =>
+    [...prev, authorData.data].sort((a, b) => {
+      const nameA = `${a.firstName} ${a.lastName}`.toLowerCase();
+      const nameB = `${b.firstName} ${b.lastName}`.toLowerCase();
+
+      return nameA.localeCompare(nameB);
+    })
+  );
 }
   // skapa ny book
   const response = await fetch('/api/books', {
