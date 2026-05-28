@@ -33,15 +33,15 @@ export default function BookDropdown({ user }) {
 
           )}
 
-          <NavLink to="/filter-genre">
+          <NavLink to="/filter-genre" onClick={() => setOpen(false)}>
             Filtrera efter genre
           </NavLink>
 
-          <NavLink to="/filter-rating">
+          <NavLink to="/filter-rating" onClick={() => setOpen(false)}>
             Filtrera efter recension
           </NavLink>
 
-          <NavLink to="/filter-year">
+          <NavLink to="/filter-year" onClick={() => setOpen(false)}>
             Filtrera efter utgivningsår
           </NavLink>
 
