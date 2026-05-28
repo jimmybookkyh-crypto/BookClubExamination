@@ -31,6 +31,7 @@ module.exports = createCoreController("api::review.review", ({ strapi }) => ({
         book: {
           populate: {
             author: true,
+            image: true,
           },
         },
       },
