@@ -53,26 +53,18 @@ button {
   font: inherit;
   font-size: 1rem;
   font-weight: 500;
-  color: var(--text);
+  color: #fff;
   border: none;
   border-radius: 8px;
+  background-color: var(--accent);
   cursor: pointer;
   -webkit-appearance: none;
   appearance: none;
   transition: background-color 0.15s, transform 0.05s;
 
-  &:hover {
-    background-color: var(--accent);
-    color:#fff;
-  }
 
   &:active {
     transform: translateY(1px);
-  }
-
-  &:focus-visible {
-    outline: 3px solid oklch(from var(--accent) l c h / 0.4);
-    outline-offset: 2px;
   }
 
   &:disabled {
@@ -84,4 +76,15 @@ button {
     float: right;
     margin-right: 0;
   }
+}
+
+.profile-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-option {
+  width: 500px;
+  margin: 0 auto;
+  margin-bottom: 10px;
 }

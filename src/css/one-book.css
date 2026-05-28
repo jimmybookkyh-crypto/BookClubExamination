@@ -4,14 +4,12 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 600px;
+    justify-content: center;
+    align-items: center;
+    width: 800px;
 
     .image {
         margin-top: 1rem;
-        justify-self: center;
-        align-self: center;
     }
 
     .title {
@@ -26,7 +24,7 @@
 
     .tagname {
         margin: 10px;
-        background-color: #F7F0E4;
+        background-color: #E8F0ED;
         padding: 5px 15px;
         border-radius: 10px;
         font-size: 14px;
@@ -34,14 +32,32 @@
     }
 
     .desc {
-        text-align: left;
+        /* text-align: left; */
         margin: 10px;
         padding: 10px;
+        width: 300px;
     }
 
     .review-section {
         width: 100%;
         border-top: 1px solid #EEEEEE;
         padding: 10px;
+    }
+}
+
+.reviews {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .reviews-title {
+        display: flex;
+        justify-content: space-between;
+        background-color: #E8F0ED;
+        border-radius: 8px;
+        padding: 10px 20px;
+        width: 300px;
+        margin: 0 auto;
     }
 }

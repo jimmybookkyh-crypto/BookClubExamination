@@ -14,6 +14,7 @@ export default function Start() {
   const [searchParams] = useSearchParams();
 
   const search = searchParams.get("query") || "";
+
   return (
     <>
       {!search && (
@@ -25,7 +26,11 @@ export default function Start() {
           </div>
         </section>
       )}
-      <GetAllBooks search={search} />
+
+      <GetAllBooks 
+        search={search}
+        shuffle={!search}
+      />
     </>
   );
 }

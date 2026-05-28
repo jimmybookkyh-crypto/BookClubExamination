@@ -21,27 +21,27 @@ export default function BookDropdown({ user }) {
 
           {user ? (
 
-            <NavLink to="/create-book">
+            <NavLink to="/create-book" onClick={() => setOpen(false)}>
               Lägg till bok
             </NavLink>
 
           ) : (
 
-            <NavLink to="/login">
+            <NavLink to="/login" onClick={() => setOpen(false)}>
               Logga in
             </NavLink>
 
           )}
 
-          <NavLink to="/filter-genre">
+          <NavLink to="/filter-genre" onClick={() => setOpen(false)}>
             Filtrera efter genre
           </NavLink>
 
-          <NavLink to="/filter-rating">
+          <NavLink to="/filter-rating" onClick={() => setOpen(false)}>
             Filtrera efter recension
           </NavLink>
 
-          <NavLink to="/filter-year">
+          <NavLink to="/filter-year" onClick={() => setOpen(false)}>
             Filtrera efter utgivningsår
           </NavLink>
 

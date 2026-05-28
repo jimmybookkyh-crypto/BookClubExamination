@@ -92,7 +92,7 @@ export default function FilterYear({search}) {
       <h2>Filtrera efter år</h2>
 
 
-      <select value={year} onChange={handleChange}>
+      <select className="filer-option" value={year} onChange={handleChange}>
         <option value="">-- Välj år --</option>
 
 
