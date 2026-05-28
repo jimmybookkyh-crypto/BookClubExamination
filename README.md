@@ -1,83 +1,101 @@
-# BookClubExamination
-This is a mono-repo for teaching purposes!
+# Grupp 1 - BookClubExamination
 
-Root level is a Vite+React+JS project.
+### Projektbeskrivning
 
-As a backend we use the CMS strapi (contained in the strapi folder)
+- Vi har skapat en sida åt en bokklubb.
 
-## Teknikstack
+Den riktar sig till alla "bokmalar" 📚 som vill vara med i en bokklubb för att t.ex. få tips på böcker att läsa, kunna läsa eller skriva recensioner och även lägga upp egna tips på sidan som andra kan ta del av.
 
-- Node.js
-- SQLite (better-sqlite3)
-- Dotenv (.env)
-- UUIDv4
+Det krävs att man har ett konto på sidan om man önskar kunna lägga upp böcker och skriva recensioner. Man skapar lätt sin profil genom att registrera sig och man kan när som helst ändra sina uppgifter eller avsluta sitt konto i profildelen.
 
-### Install dependencies
-To install all dependencies
-
-```
-npm install
-cd strapi
-npm install
-```
-
-Why don't we use npm workspaces? Currently strapi has an issue with installing its dependencies correctly when using npm workspaces.
-
-### Start the dev environment
-In the root folder run
-
-```
-npm start
-```
-
-### Admin credentials for strapi during development
-
-```
-First name: Admin 
-Email: jimmybookkyh@gmail.com
-Password: Admin123
-```
+Admin till sidan så som t.ex. återställa lösenord, rensa i databasen etc. sköts i Strapi i projekt.
 
 ## Installation
 
 ```bash
 # Klona repot
 git clone [(https://github.com/jimmybookkyh-crypto/BookClubExamination.git)]
+```
+
+Eller genom att ladda ner med:
+
+- Download ZIP
+
+---
 
 # Installera beroenden
+
+i rotmappen
+
+```bash
 npm install
+```
+
+```bash
+cd strapi
+```
+
+i Strapimappen
+
+```bash
+npm install
+```
+
+---
 
 ## Gitignore
 
 För projektinlämning är följande filer borttagna från vår .gitignore i root-mappen:
-*.db
-*.env
+_.db
+_.env
 
 i följande filer i Strapis .gitignore:
 .temp
 
+---
+
+### Starta utvecklingsservern:
+
+```bash
+npm start
 ```
 
-Servern startar på `http://localhost:5001` för Strapi och 5173 för REACT .
+---
 
-## API-dokumentation
+### Öppna i webbläsaren (Ctrl+klick)
 
-[API Dokumentation](api-docs.md)
-[I länken ovan kan man finna alla endpoint med metod, URL, body, svar och felfall.]
+När servrarna är igång hittar du applikationen på följande adresser:
 
-## WebSocket-diskussion
+- Frontend (React): http://localhost:5001
 
-[Text]
+- Backend (Strapi): http://localhost:5173
+
+---
+
+### Logga in i Strapis-gränssnitt
+
+- Användarnamn: jimmybookkyh@gmail.com
+
+- Lösenord: Admin123
+
+---
+
+## Teknikstack
+
+- Backend:Strapi (Headless CMS)
+- Frontend:React
+- Verktyg:Concurrently
+
+---
 
 ## Gruppmedlemmar
 
-| Namn             |GitHub Name          | Datum  | Signatur / OK |
-| -----------------|---------------------|--------| ------------- |
-| Andrea Vega      | AVega89-0407        | 260505 | OK ⛵        |
-| Teddy Lind       | teddylindstrom      | 260505 | OK 🧸        |
-| Eva Maria Köning | MrsKoning           | 260505 | OK 😂        |
-| Jimmy Book       | jimmybookkyh-crypto | 260505 | OK 📘        |
-| Sara Kempii      | 260505 | OK 🌹        |
+| Namn             | GitHub Name         | Datum  | Signatur / OK |
+| ---------------- | ------------------- | ------ | ------------- |
+| Andrea Vega      | AVega89-0407        | 260628 | OK ⛵         |
+| Teddy Lind       | teddylindstrom      | 260628 | OK 🧸         |
+| Eva Maria Köning | MrsKoning           | 260628 | OK 😂         |
+| Jimmy Book       | jimmybookkyh-crypto | 260628 | OK 📘         |
+| Sara Kempii      | sarakemppi          | 260628 | OK 🌹         |
 
-
-
+---
