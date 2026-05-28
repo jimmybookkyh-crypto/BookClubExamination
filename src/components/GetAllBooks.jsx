@@ -53,10 +53,6 @@ export default function GetAllBooks({ search }) {
                   <h4>Kategori: </h4>
                   {genre?.name}
                 </div>
-                <div>
-                  <h4>Kort beskrivning: </h4>
-                  {description?.[0]?.children?.[0]?.text}
-                </div>
                 <br />
                 <button onClick={() => navigate(`/one-book/${documentId}`)}>
                   Läs mer
