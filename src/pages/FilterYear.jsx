@@ -48,7 +48,7 @@ export default function FilterYear({search}) {
 
 
         // Ta bort dubletter
-        const uniqueYears = [...new Set(allYears)];
+        const uniqueYears = [...new Set(allYears)].sort((a, b) => a - b);
 
 
         setYears(uniqueYears);
@@ -67,7 +67,7 @@ export default function FilterYear({search}) {
         console.log("Books from Strapi:", data);
 
 
-        setBooks(data.data ?? []);
+        setBooks(data.data ?? []).sort((a, b) => a.year - b.year);
         setLoading(false);
       });
   }

@@ -46,7 +46,7 @@ export default function FilterGenre({ search }) {
   useEffect(() => {
     fetch(`${STRAPI_URL}/api/genres`)
       .then((res) => res.json())
-      .then((data) => setGenres(data.data));
+      .then((data) => setGenres(data.data.sort((a, b) => a.name.localeCompare(b.name))));
   }, []);
 
 
@@ -56,7 +56,7 @@ export default function FilterGenre({ search }) {
       .then((res) => res.json())
       .then((data) => {
         console.log("Bok-svar från Strapi:", data);
-        setBooks(data.data ?? []);
+        setBooks((data.data ?? []).sort((a, b) => a.title.localeCompare(b.title)));
         setLoading(false);
       });
   }
