@@ -73,7 +73,7 @@ export default function FilterGenre({ search }) {
   return (
     <div>
       <h2>Filtrera efter genre</h2>
-      <select value={genre} onChange={handleChange}>
+      <select className="filter-option" value={genre} onChange={handleChange}>
         <option value="">-- Välj genre --</option>
         {genres.map((g) => (
           <option key={g.id} value={g.name}>

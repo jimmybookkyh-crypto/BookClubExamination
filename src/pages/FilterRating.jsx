@@ -58,6 +58,7 @@ export default function FilterRating({search}) {
     <div>
       <h2>Filtrera efter betyg</h2>
       <select
+      className="filter-option"
         value={selectedStars ?? ""}
         onChange={(e) => fetchByRating(e.target.value)}
       >
