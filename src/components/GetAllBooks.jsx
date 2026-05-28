@@ -44,16 +44,13 @@ export default function GetAllBooks({ search }) {
             return (
               <div key={documentId} className="book-card">
                 {fullImageUrl && <img src={fullImageUrl} alt={title} />}
-                <h3>{title}</h3>
-                <div>
-                  <h4>Författare: </h4>
+                <h2 className="title">{title}</h2>
+                <p className="subtitle">
                   {author?.firstName} {author?.lastName}
-                </div>
-                <div>
-                  <h4>Kategori: </h4>
+                </p>
+                <p className="tagname">
                   {genre?.name}
-                </div>
-                <br />
+                </p>
                 <button onClick={() => navigate(`/one-book/${documentId}`)}>
                   Läs mer
                 </button>

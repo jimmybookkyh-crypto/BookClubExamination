@@ -130,11 +130,11 @@ export default function CreateReview({ onReviewCreated, ...rest }) {
               onChange={updateFormData}
             >
               <option>Betygsätt din recension...</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+              <option>1 ⭐</option>
+              <option>2 ⭐</option>
+              <option>3 ⭐</option>
+              <option>4 ⭐</option>
+              <option>5 ⭐</option>
             </select>
             <br />
             <br />

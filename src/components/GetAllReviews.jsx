@@ -23,12 +23,14 @@ export default function GetAllReviews() {
     <section className="reviews">
       {reviews.map(({ documentId, user, content, rating }) => (
         <article key={documentId}>
-          <p>Skriven av: {user?.username} </p>
-          <p>Recension: {content?.[0]?.children?.[0]?.text}</p>
+          <div className="reviews-title">
+          <p><b>{user?.username}</b></p>          
           <p>
-            Betyg:
-            {rating}
+            {rating} ⭐
           </p>{" "}
+          </div>
+          <br />
+          <p className="reviews-desc"><b>Recension:</b> {content?.[0]?.children?.[0]?.text}</p>
           <br />
         </article>
       ))}
