@@ -24,6 +24,10 @@ export default function CreateReview({ onReviewCreated, ...rest }) {
   // const [books, reviews, loading] = useFetch("/api/books", "/api/reviews");
   const [showReviews, setShowReviews] = useState(false);
 
+  if (!user) {
+    return <p>Du måste vara inloggad för att skriva en recension</p>;
+  }
+
   // if (loading) {
   //   return <p>Laddar formulär...</p>;
   // }
@@ -92,7 +96,7 @@ export default function CreateReview({ onReviewCreated, ...rest }) {
         <br />
         <div>
           <h3>Din recension:</h3>
-          <p>Skriven av: {user.username}</p>
+          <p>Skriven av: {user?.username}</p>
 
           <p>Recension: {formData.content}</p>
 
@@ -129,12 +133,12 @@ export default function CreateReview({ onReviewCreated, ...rest }) {
               value={formData.rating}
               onChange={updateFormData}
             >
-              <option>Betygsätt din recension...</option>
-              <option>1 ⭐</option>
-              <option>2 ⭐</option>
-              <option>3 ⭐</option>
-              <option>4 ⭐</option>
-              <option>5 ⭐</option>
+              <option value="">Betygsätt din recension...</option>
+              <option value="1">1 ⭐</option>
+              <option value="2">2 ⭐</option>
+              <option value="3">3 ⭐</option>
+              <option value="4">4 ⭐</option>
+              <option value="5">5 ⭐</option>
             </select>
             <br />
             <br />
