@@ -111,17 +111,18 @@ async function deleteAccount() {
     value={formData.confirmPassword}
     onChange={updateFormData}
   />
-</label><br />
-      <button type="submit">Spara ändringar</button><br/>
+</label><br /><div className="profile-buttons">
+      <button type="submit">Spara ändringar</button>
       <button onClick={() => navigate('/')}>
-        Avbryt</button><br />
+        Avbryt</button>
       <button
         type="button"
         onClick={() => setShowDeleteDialog(true)}
         style={{ color: 'red' }}
       >
         Avsluta konto
-      </button><br/>
+        </button>
+        </div>
       <button onClick={logout}>Logga ut</button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {saved && <p style={{ color: 'green' }}>Ändringar sparade.</p>}
