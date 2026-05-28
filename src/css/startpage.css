@@ -15,12 +15,20 @@ color: var(--text);
   padding: 24px;
 }
 
-.book-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  padding: 24px;
-}
+.subtitle {
+        margin: auto 10px;
+        color: #878585;
+        font-size: 16px;
+    }
+
+ .tagname {
+        margin: 10px;
+        background-color: #E8F0ED;
+        padding: 5px 15px;
+        border-radius: 10px;
+        font-size: 14px;
+        color: var(--text);
+    }
 
 /* Tablet */
 @media (max-width: 900px) {

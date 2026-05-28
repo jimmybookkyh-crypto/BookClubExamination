@@ -118,7 +118,7 @@ async function deleteAccount() {
       <button
         type="button"
         onClick={() => setShowDeleteDialog(true)}
-        style={{ color: 'red' }}
+        style={{ color: 'white', backgroundColor: '#c73131' }}
       >
         Avsluta konto
         </button>
@@ -149,7 +149,7 @@ async function deleteAccount() {
           <p>Är du säker på att du vill avsluta ditt konto?</p>
 
           <button
-            type="button" onClick={deleteAccount} style={{ color: 'red', marginRight: '1rem' }}>
+            type="button" onClick={deleteAccount} style={{ color: 'white', backgroundColor: '#c73131', marginRight: '1rem' }}>
             Ja, ta bort mitt konto
           </button>
 
