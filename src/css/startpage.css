@@ -1,6 +1,6 @@
 main {
-background-color: var(--code-bg);
-color: var(--text);
+  background-color: var(--code-bg);
+  color: var(--text);
 }
 
 .book-grid {
@@ -16,19 +16,19 @@ color: var(--text);
 }
 
 .subtitle {
-        margin: auto 10px;
-        color: #878585;
-        font-size: 16px;
-    }
+  margin: auto 10px;
+  color: #878585;
+  font-size: 16px;
+}
 
- .tagname {
-        margin: 10px;
-        background-color: #E8F0ED;
-        padding: 5px 15px;
-        border-radius: 10px;
-        font-size: 14px;
-        color: var(--text);
-    }
+.tagname {
+  margin: 10px;
+  background-color: #e8f0ed;
+  padding: 5px 15px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text);
+}
 
 /* Tablet */
 @media (max-width: 900px) {
@@ -72,6 +72,10 @@ color: var(--text);
   flex-direction: column;
 
   gap: 8px;
+}
+
+.book-card button {
+  margin-top: auto;
 }
 
 /* Bilder */
