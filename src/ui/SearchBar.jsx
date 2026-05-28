@@ -3,7 +3,7 @@ export default function SearchBar({ value, onChange }) {
     <input
       className="searchbar"
       type="text"
-      placeholder="Sök böcker..."
+      placeholder="Sök böcker eller författare..."
       value={value}
       onChange={onChange}
     />

@@ -21,16 +21,13 @@ export default function Start() {
         <section className="hero">
           <img src={heroImage} alt="Books" />
           <div className="hero-overlay">
-            <h2>Welcome!</h2>
-            <p>Discover, review and share your favorite books</p>
+            <h2>Välkommen!</h2>
+            <p>Upptäck, recensera och dela dina favoritböcker</p>
           </div>
         </section>
       )}
 
-      <GetAllBooks 
-        search={search}
-        shuffle={!search}
-      />
+      <GetAllBooks search={search} shuffle={!search} />
     </>
   );
 }
