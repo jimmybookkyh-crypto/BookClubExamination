@@ -94,7 +94,6 @@ export default function FilterYear() {
 
           return (
             <div key={book.documentId} className="book-card">
-
               {fullImageUrl && <img src={fullImageUrl} alt={book.title} />}
 
               <h2>{book.title}</h2>
@@ -102,7 +101,6 @@ export default function FilterYear() {
               <p className="subtitle">
                 {book.author?.firstName} {book.author?.lastName}
               </p>
-              <p className="tagname">{book.year}</p>
 
               {/* <p>Recension: {review.content?.[0]?.children?.[0]?.text}</p>
               <p>Skriven av: {review.user?.username}</p>*/}
