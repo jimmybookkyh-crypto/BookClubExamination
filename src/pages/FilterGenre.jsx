@@ -80,12 +80,7 @@ export default function FilterGenre() {
               <h2>{book.title}</h2>
 
               <p className="subtitle">
-                {book.author?.firstName}{" "}
-                {book.author?.lastName}
-              </p>
-
-              <p className="tagname">
-                {book.year}
+                {book.author?.firstName} {book.author?.lastName}
               </p>
 
               <button onClick={() => navigate(`/one-book/${book.documentId}`)}>
