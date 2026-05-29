@@ -69,19 +69,19 @@ export default function FilterRating() {
                 <img src={fullImageUrl} alt={review.book?.title} />
               )}
 
-              <h3>{review.book?.title}</h3>
+              <h2>{review.book?.title}</h2>
 
-              <p>
-                <b>Författare:</b> {review.book?.author?.firstName}{" "}
+              <p className="subtitle">
+                {review.book?.author?.firstName}{" "}
                 {review.book?.author?.lastName}
               </p>
 
-              <p>
+              <p className="desc">
                 <b>Recension:</b> {review.content?.[0]?.children?.[0]?.text}
               </p>
 
-              <p>
-                <b>Skriven av:</b> {review.user?.username}
+              <p className="tagname">
+                {review.user?.username}
               </p>
 
               <button

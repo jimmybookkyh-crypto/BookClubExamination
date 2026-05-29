@@ -77,15 +77,15 @@ export default function FilterGenre() {
             <div key={book.documentId} className="book-card">
               {fullImageUrl && <img src={fullImageUrl} alt={book?.title} />}
 
-              <h3>{book.title}</h3>
+              <h2>{book.title}</h2>
 
-              <p>
-                <b>Författare:</b> {book.author?.firstName}{" "}
+              <p className="subtitle">
+                {book.author?.firstName}{" "}
                 {book.author?.lastName}
               </p>
 
-              <p>
-                <b>Utgivningsår:</b> {book.year}
+              <p className="tagname">
+                {book.year}
               </p>
 
               <button onClick={() => navigate(`/one-book/${book.documentId}`)}>
