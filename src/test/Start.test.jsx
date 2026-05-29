@@ -11,6 +11,6 @@ describe("Start component", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText(/Welcome!/i)).toBeInTheDocument();
+    expect(screen.getByText(/Välkommen!/i)).toBeInTheDocument();
   });
 });
