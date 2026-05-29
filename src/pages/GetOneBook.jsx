@@ -32,26 +32,28 @@ export default function GetOneBook({ user, setUser }) {
   return (
     <>
       <section className="book">
-        {fullImageUrl && <img src={fullImageUrl} alt={title} className="image"/>}
+        {fullImageUrl && (
+          <img src={fullImageUrl} alt={title} className="image" />
+        )}
         <h2 className="title">{title}</h2>
         <p className="subtitle">
           {author?.firstName} {author?.lastName}
         </p>
-        <p className="tagname">
-          {" "}
-          {genre?.name}
-        </p>
-
+        <p className="tagname"> {genre?.name}</p>
+        <p>{book.year}</p>
         <p className="desc">
           <b>Beskrivning:</b> <br /> {description?.[0]?.children?.[0]?.text}
         </p>
-      <article className="review-section">
-      <h2>Recensioner</h2>
-      <GetAllReviews key={refreshKey} />
+        <article className="review-section">
+          <h2>Recensioner</h2>
+          <GetAllReviews key={refreshKey} />
 
-      <CreateReview user={user} setUser={setUser}
-      onReviewCreated={() => setRefreshKey(k => k + 1)} />
-      </article>
+          <CreateReview
+            user={user}
+            setUser={setUser}
+            onReviewCreated={() => setRefreshKey((k) => k + 1)}
+          />
+        </article>
       </section>
     </>
   );
