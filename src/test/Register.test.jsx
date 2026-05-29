@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
-import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 vi.mock("react-router", async () => {
   const actual = await vi.importActual("react-router");
@@ -19,10 +19,10 @@ describe("Register", () => {
   it("render text", () => {
     render(
       <MemoryRouter>
-        <Login />
+        <Register />
       </MemoryRouter>,
     );
 
-    expect(screen.getByText(/Lösenord/i)).toBeInTheDocument();
+    expect(screen.getByText(/Användarnamn/i)).toBeInTheDocument();
   });
 });
