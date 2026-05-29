@@ -62,14 +62,14 @@ export default function CreateReview({ onReviewCreated, ...rest }) {
                 children: [
                   {
                     type: "text",
-                    text: formData.content
-                  }
-                ]
-              }
+                    text: formData.content,
+                  },
+                ],
+              },
             ],
             rating: Number(formData.rating),
             book: documentId,
-            user: user.id
+            user: user.id,
           },
         }),
       });
@@ -145,7 +145,9 @@ export default function CreateReview({ onReviewCreated, ...rest }) {
           </label>
           <button type="submit">Skicka</button>
         </form>
-      ) : (<p>Du måste vara inloggad för att kunna skriva en recension</p>)}
+      ) : (
+        <p>Om du också vill lämna en recension måste du logga in!</p>
+      )}
     </>
   );
 }
